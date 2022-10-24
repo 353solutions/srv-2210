@@ -3,6 +3,8 @@ package unter
 import (
 	"fmt"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type Kind uint
@@ -12,6 +14,7 @@ const (
 	Private
 )
 
+// String implement fmt.Stringer
 func (k Kind) String() string {
 	switch k {
 	case Shared:
@@ -30,4 +33,8 @@ type Ride struct {
 	Start    time.Time
 	End      time.Time
 	Distance float64
+}
+
+func NewID() string {
+	return uuid.NewString()
 }

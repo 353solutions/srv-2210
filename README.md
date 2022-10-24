@@ -47,6 +47,24 @@ $ git clone https://github.com/353solutions/srv-2210.git unter
         - `docker pull postgres:15-alpine`
         - `docker pull redis:7-alpine`
 
+### Design
+
+```
+[library]
+layers:
+    - business
+    - foundations
+
+front ends: [web] [cli] [gui]
+```
+
+Rules of thumb: imports go downward in the layers
+
+Data Types: one per layer
+    API
+    Business
+    Database
+
 
 ### Data & Other
 
