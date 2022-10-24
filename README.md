@@ -33,6 +33,9 @@ $ git clone https://github.com/353solutions/srv-2210.git unter
 
 ### Links
 
+- Validation
+    - [cue](https://cuelang.org/)
+    - [validator](https://pkg.go.dev/github.com/go-playground/validator/v10)
 - REST APIs
     - [HTTP status cats](https://http.cat/)
     - [encoding/json](https://pkg.go.dev/encoding/json)

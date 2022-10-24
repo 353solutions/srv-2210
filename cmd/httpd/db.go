@@ -12,11 +12,11 @@ type DB struct {
 	rides map[string]unter.Ride
 }
 
-func NewDB() *DB {
+func NewDB(dsn string) (*DB, error) {
 	db := DB{
 		rides: make(map[string]unter.Ride),
 	}
-	return &db
+	return &db, nil
 }
 
 func (db *DB) Add(r unter.Ride) {

@@ -7,9 +7,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/353solutions/unter"
+	"github.com/ardanlabs/conf/v3"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
@@ -37,11 +39,11 @@ GET /rides/{id}
 GET /rides?start=<time>&end=<time>
 */
 
-var (
-	db = NewDB()
-)
+type Server struct {
+	db *DB
+}
 
-func healthHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO:
 	fmt.Fprintln(w, "OK")
 }
@@ -57,7 +59,7 @@ func kindFromString(s string) (unter.Kind, error) {
 	return 0, fmt.Errorf("unknown kind: %s", s)
 }
 
-func startHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 	// Step 1: Unmarshal & Validate data
 	// {"driver": "Bond", "kind": "private"}
 	var req struct {
@@ -87,7 +89,7 @@ func startHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Step 2: Work
-	db.Add(rd)
+	s.db.Add(rd)
 
 	// Step 3: Marshal & send response
 	resp := map[string]any{
@@ -113,7 +115,7 @@ POST /rides/{id}/end
 
 	{"distance": 1.3}
 */
-func endHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) endHandler(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		Distance float64
 	}
@@ -130,14 +132,14 @@ func endHandler(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
-	rd, err := db.Get(id)
+	rd, err := s.db.Get(id)
 	if err != nil {
 		http.Error(w, "not found", http.StatusNotFound)
 		return
 	}
 	rd.Distance = req.Distance
 	rd.End = time.Now().UTC()
-	db.Add(rd)
+	s.db.Add(rd)
 
 	resp := map[string]any{
 		"id":     rd.ID,
@@ -173,11 +175,11 @@ type GetResponse struct {
 }
 
 // GET /rides/<id>
-func getHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	rd, err := db.Get(id)
+	rd, err := s.db.Get(id)
 	if err != nil {
 		http.Error(w, "not found", http.StatusNotFound)
 		return
@@ -247,20 +249,92 @@ func addLogging(h http.Handler) http.Handler {
 	return http.HandlerFunc(fn)
 }
 
+// config: defaults < config file < environment < command line options
+// defaults: struct
+// config file: YAML, TOML
+// environment: os.Getenv
+// command line: flag
+
+// outside: viper + cobra
+
+type Config struct {
+	Addr string `conf:"default::8080,env:ADDR"`
+	DSN  string `conf:"default:host=localhost user=postgres,env=DSN"`
+}
+
+func loadConfig() (Config, error) {
+	var c Config
+	if _, err := conf.Parse("UNTER", &c); err != nil {
+		return Config{}, err
+	}
+
+	if err := c.Validate(); err != nil {
+		return Config{}, err
+	}
+
+	return c, nil
+}
+
+func (c Config) Validate() error {
+	if err := validAddr(c.Addr); err != nil {
+		return fmt.Errorf("bad port: %s", err)
+	}
+
+	if c.DSN == "" {
+		return fmt.Errorf("missing DSN")
+	}
+
+	return nil
+}
+
+func validAddr(addr string) error {
+	i := strings.Index(addr, ":")
+	if i == -1 {
+		return fmt.Errorf("missing ':' in address")
+	}
+
+	var port int
+	if _, err := fmt.Sscanf(addr[i+1:], "%d", &port); err != nil {
+		return fmt.Errorf("bad port")
+	}
+
+	const maxPort = 65535
+	if port < 0 || port > maxPort {
+		return fmt.Errorf("port %d our of range [0,%d]", port, maxPort)
+	}
+
+	return nil
+}
+
 func main() {
+	cfg, err := loadConfig()
+	if err != nil {
+		log.Printf("ERROR: can't load config - %s", err)
+		os.Exit(1)
+	}
+	log.Printf("INFO: config=%#v", cfg)
 	r := mux.NewRouter()
+
+	db, err := NewDB(cfg.DSN)
+	if err != nil {
+		log.Printf("ERROR: can't connect to database- %s", err)
+		os.Exit(1)
+	}
+
+	s := Server{
+		db: db, // injection
+	}
 	// routing
 	// - if route ends with / it's a prefix match
 	// - otherwise exact match
-	r.HandleFunc("/health", healthHandler).Methods("GET")
-	r.HandleFunc("/rides", startHandler).Methods("POST")
-	r.HandleFunc("/rides/{id}", getHandler).Methods("GET")
-	r.HandleFunc("/rides/{id}/end", endHandler).Methods("POST")
+	r.HandleFunc("/health", s.healthHandler).Methods("GET")
+	r.HandleFunc("/rides", s.startHandler).Methods("POST")
+	r.HandleFunc("/rides/{id}", s.getHandler).Methods("GET")
+	r.HandleFunc("/rides/{id}/end", s.endHandler).Methods("POST")
 	http.Handle("/", addLogging(r))
 
-	addr := ":8080"
-	log.Printf("INFO: server starting on %s", addr)
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	log.Printf("INFO: server starting on %s", cfg.Addr)
+	if err := http.ListenAndServe(cfg.Addr, nil); err != nil {
 		log.Printf("ERROR: can't start - %s", err)
 		os.Exit(1)
 		// log.Fatalf("ERROR: can't start - %s", err)

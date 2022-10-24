@@ -249,4 +249,183 @@ $ git ci -m oops
  delete mode 100755 cmd/httpd/__debug_bin
 
 unter on  main [⇡] via go v1.19.2 
+$git push
+Enumerating objects: 21, done.
+Counting objects: 100% (21/21), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (14/14), 3.32 MiB | 542.00 KiB/s, done.
+Total 14 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), done.
+To github.com:353solutions/srv-2210.git
+   a505e6f..98ab35f  main -> main
+
+unter on  main via go v1.19.2 took 10s 
+$ mv cmd/httpd/.gitignore .
+
+unter on  main [!?] via go v1.19.2 
+$ curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides
+{"id":"f7287042-ad52-4265-bd49-98a089b20f15"}%                                                                                          
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/rides/f7287042-ad52-4265-bd49-98a089b20f15
+{"id":"f7287042-ad52-4265-bd49-98a089b20f15","driver":"Bond","kind":"private","start":"2022-10-24T19:21:35.790545342Z"}%                
+unter on  main [!?] via go v1.19.2 
+$ curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides
+{"id":"78925724-5157-45ce-94d0-16081a867005"}%                                                                                          
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/rides/78925724-5157-45ce-94d0-16081a867005     
+{"id":"78925724-5157-45ce-94d0-16081a867005","driver":"Bond","kind":"private","start":"2022-10-24T19:22:35.259746177Z","end":null}%     
+unter on  main [!?] via go v1.19.2 
+$ git add .
+unter on  main [+] via go v1.19.2 
+$ git st
+## main...origin/main
+A  .gitignore
+M  README.md
+ M _class/day-1.log
+M  cmd/httpd/main.go
+
+unter on  main [!+] via go v1.19.2 
+$ git ci -m 'get with custom JSON'
+[main 214a498] get with custom JSON
+ 3 files changed, 27 insertions(+), 1 deletion(-)
+ create mode 100644 .gitignore
+
+unter on  main [!⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 12, done.
+Counting objects: 100% (12/12), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (7/7), 1.06 KiB | 1.06 MiB/s, done.
+Total 7 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:353solutions/srv-2210.git
+   98ab35f..214a498  main -> main
+
+unter on  main [!] via go v1.19.2 took 2s 
+$ git st -u
+## main...origin/main
+ M _class/day-1.log
+ M cmd/httpd/main.go
+unter on  main [!] via go v1.19.2 
+$ git log 
+
+
+unter on  main [!] via go v1.19.2 
+❮ curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides
+{"action":"start","id":"4aabb155-0cd7-4f95-9bd4-c883cac1a4f7"}%                                                                         
+unter on  main [!] via go v1.19.2 
+$ curl -d'{"distance": 1.2}' http://localhost:8080/rides/4aabb155-0cd7-4f95-9bd4-c883cac1a4f7/end
+404 page not found
+
+unter on  main [!] via go v1.19.2 
+$ curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides                     
+{"action":"start","id":"d6cfb01d-54c9-4416-b5e7-0455fff46344"}%                                                                         
+unter on  main [!] via go v1.19.2 
+$ curl -d'{"distance": 1.2}' http://localhost:8080/rides/d6cfb01d-54c9-4416-b5e7-0455fff46344/end
+{"action":"end","id":"d6cfb01d-54c9-4416-b5e7-0455fff46344"}%                                                                           
+unter on  main [!] via go v1.19.2 
+❮ curl http://localhost:8080/rides/d6cfb01d-54c9-4416-b5e7-0455fff46344     
+{"id":"d6cfb01d-54c9-4416-b5e7-0455fff46344","driver":"Bond","kind":"private","start":"2022-10-24T19:50:09.006839378Z","end":"2022-10-24T19:50:22.720238521Z","distance":1.2}%                                                                                                  
+unter on  main [!] via go v1.19.2 
+$ git add -u
+
+unter on  main [+] via go v1.19.2 
+$ git ci -m '/end'
+[main 394ef8b] /end
+ 2 files changed, 299 insertions(+), 1 deletion(-)
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 2.96 KiB | 2.96 MiB/s, done.
+Total 7 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:353solutions/srv-2210.git
+   214a498..394ef8b  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ git alias ci
+git: 'alias' is not a git command. See 'git --help'.
+
+unter on  main via go v1.19.2 
+$ git help status 
+
+unter on  main via go v1.19.2 
+❮ git help st    
+'st' is aliased to 'status --untracked-files=no -sb'
+
+unter on  main via go v1.19.2 
+$ git help ci
+'ci' is aliased to 'commit'
+
+unter on  main via go v1.19.2 
+$ curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides                     
+{"action":"start","id":"fadfeb15-769e-4d23-9366-3379b4590639"}%                                                                         
+unter on  main [!] via go v1.19.2 
+$curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides
+{"action":"start","id":"19812d07-9299-4c8b-a54d-30ef349ead76"}%                                                                         
+unter on  main [!] via go v1.19.2 
+❮ 
+
+unter on  main [!] via go v1.19.2 
+$ git add -a
+error: unknown switch `a'
+usage: git add [<options>] [--] <pathspec>...
+
+    -n, --dry-run         dry run
+    -v, --verbose         be verbose
+
+    -i, --interactive     interactive picking
+    -p, --patch           select hunks interactively
+    -e, --edit            edit current diff and apply
+    -f, --force           allow adding otherwise ignored files
+    -u, --update          update tracked files
+    --renormalize         renormalize EOL of tracked files (implies -u)
+    -N, --intent-to-add   record only the fact that the path will be added later
+    -A, --all             add changes from all tracked and untracked files
+    --ignore-removal      ignore paths removed in the working tree (same as --no-all)
+    --refresh             don't add, only refresh the index
+    --ignore-errors       just skip files which cannot be added because of errors
+    --ignore-missing      check if - even missing - files are ignored in dry run
+    --sparse              allow updating entries outside of the sparse-checkout cone
+    --chmod (+|-)x        override the executable bit of the listed files
+    --pathspec-from-file <file>
+                          read pathspec from file
+    --pathspec-file-nul   with --pathspec-from-file, pathspec elements are separated with NUL character
+
+unter on  main [!] via go v1.19.2 
+$ git st -u
+## main...origin/main
+ M cmd/httpd/main.go
+
+unter on  main [!] via go v1.19.2 
+$ git add -u
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m 'middleware'
+[main 190a865] middleware
+ 1 file changed, 42 insertions(+), 1 deletion(-)
+
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 843 bytes | 843.00 KiB/s, done.
+Total 5 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:353solutions/srv-2210.git
+   394ef8b..190a865  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ go mod tidy
+go: finding module for package github.com/ardanlabs/conf
+go: found github.com/ardanlabs/conf in github.com/ardanlabs/conf v1.5.0
+
+unter on  main [!] via go v1.19.2 
 $
