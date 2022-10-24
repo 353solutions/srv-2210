@@ -89,13 +89,58 @@ func startHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Step 3: Marshal & send response
 	resp := map[string]any{
-		"id": rd.ID,
+		"id":     rd.ID,
+		"action": "start",
 	}
 	/*
 		 if err := json.NewEncoder(w).Encode(resp); err != nil {
 			// Can't change response code
 		}
 	*/
+
+	if err := sendJSON(w, resp); err != nil {
+		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
+		return
+
+	}
+}
+
+/*
+Exercise:
+POST /rides/{id}/end
+
+	{"distance": 1.3}
+*/
+func endHandler(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		Distance float64
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "bad json", http.StatusBadRequest)
+		return
+	}
+
+	if req.Distance == 0 {
+		http.Error(w, "missing distance", http.StatusBadRequest)
+		return
+
+	}
+
+	vars := mux.Vars(r)
+	id := vars["id"]
+	rd, err := db.Get(id)
+	if err != nil {
+		http.Error(w, "not found", http.StatusNotFound)
+		return
+	}
+	rd.Distance = req.Distance
+	rd.End = time.Now().UTC()
+	db.Add(rd)
+
+	resp := map[string]any{
+		"id":     rd.ID,
+		"action": "end",
+	}
 
 	if err := sendJSON(w, resp); err != nil {
 		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
@@ -169,6 +214,7 @@ func main() {
 	r.HandleFunc("/health", healthHandler).Methods("GET")
 	r.HandleFunc("/rides", startHandler).Methods("POST")
 	r.HandleFunc("/rides/{id}", getHandler).Methods("GET")
+	r.HandleFunc("/rides/{id}/end", endHandler).Methods("POST")
 	http.Handle("/", r)
 
 	addr := ":8080"

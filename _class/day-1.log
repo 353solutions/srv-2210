@@ -1,0 +1,252 @@
+go version
+go version go1.19.2 linux/amd64
+
+unter on  main via go v1.19.2 
+$ git --version
+git version 2.38.0
+
+unter on  main via go v1.19.2 
+$ docker version
+Client:
+ Version:           20.10.18
+ API version:       1.41
+ Go version:        go1.19.1
+ Git commit:        b40c2f6b5d
+ Built:             Sat Sep 10 11:31:10 2022
+ OS/Arch:           linux/amd64
+ Context:           default
+ Experimental:      true
+
+Server:
+ Engine:
+  Version:          20.10.18
+  API version:      1.41 (minimum version 1.12)
+  Go version:       go1.19.1
+  Git commit:       e42327a6d3
+  Built:            Sat Sep 10 11:30:17 2022
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v1.6.8
+  GitCommit:        9cd3357b7fd7218e4aec3eae239db1f68a5a6ec6.m
+ runc:
+  Version:          1.1.4
+  GitCommit:        
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+unter on  main via go v1.19.2 
+$ go mod init curl 
+
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/health
+OK
+
+unter on  main [!?] via go v1.19.2 
+$ curl -i http://localhost:8080/health
+HTTP/1.1 200 OK
+Date: Mon, 24 Oct 2022 17:40:18 GMT
+Content-Length: 3
+Content-Type: text/plain; charset=utf-8
+
+OK
+
+unter on  main [!?] via go v1.19.2 
+$ curl -i http://localhost:8080/rides  
+HTTP/1.1 200 OK
+Date: Mon, 24 Oct 2022 17:54:02 GMT
+Content-Length: 37
+Content-Type: text/plain; charset=utf-8
+
+87f6e24c-c0a2-413c-8673-59b2531b41f7
+
+unter on  main [!?] via go v1.19.2 
+❮ curl -i http://localhost:8080/rides
+HTTP/1.1 200 OK
+Date: Mon, 24 Oct 2022 17:54:03 GMT
+Content-Length: 37
+Content-Type: text/plain; charset=utf-8
+
+428b612b-4876-466e-aabd-79bc89bf0e1e
+unter on  main [!?] via go v1.19.2 
+❮ curl -i http://localhost:8080/rides
+HTTP/1.1 200 OK
+Date: Mon, 24 Oct 2022 17:54:04 GMT
+Content-Length: 37
+Content-Type: text/plain; charset=utf-8
+
+f8a0167f-6d3b-4fb6-acbe-6bf0bdc12736
+
+unter on  main [!?] via go v1.19.2 
+❮ curl -i http://localhost:8080/rides
+HTTP/1.1 200 OK
+Date: Mon, 24 Oct 2022 17:54:04 GMT
+Content-Length: 37
+Content-Type: text/plain; charset=utf-8
+
+da8d015e-4eda-4fe9-88f9-e6e2ac8af8cb
+
+unter on  main [!?] via go v1.19.2 
+❮ curl -i http://localhost:8080/rides
+HTTP/1.1 200 OK
+Date: Mon, 24 Oct 2022 17:54:05 GMT
+Content-Length: 37
+Content-Type: text/plain; charset=utf-8
+
+4d01f4dd-8246-4601-9dc2-3b97c6e216ad
+
+unter on  main [!?] via go v1.19.2 
+$ go env GOROOT
+/home/miki/sdk/go1.19.2
+
+unter on  main [!?] via go v1.19.2 
+$go env GOPATH
+/home/miki/go
+
+unter on  main [!?] via go v1.19.2 
+$ go env GOPATH
+
+unter on  main [!?] via go v1.19.2 
+$ ls ~/go/pkg 
+mod  sumdb
+
+unter on  main [!?] via go v1.19.2 
+$ ls ~/go/pkg/mod 
+4d63.com          contrib.go.opencensus.io  golang.org                go.starlark.net@v0.0.0-20200821142938-949cc6f4b097  go.uber.org
+9fans.net         github.com                google.golang.org         go.starlark.net@v0.0.0-20220816155156-cfacd8902214  honnef.co
+cache             gitlab.com                go.opencensus.io@v0.23.0  gotest.tools                                        mvdan.cc
+cloud.google.com  go.etcd.io                gopkg.in                  gotest.tools@v2.2.0+incompatible
+
+unter on  main [!?] via go v1.19.2 
+$ go mod vendor
+
+unter on  main [!?] via go v1.19.2 
+$ ls
+_class  cmd  go.mod  go.sum  README.md  unter.go  vendor
+
+unter on  main [!?] via go v1.19.2 
+$ ls vendor 
+github.com  modules.txt
+
+unter on  main [!?] via go v1.19.2 
+$ rm -r vendor 
+
+unter on  main [!?] via go v1.19.2 
+$go mod vendor
+
+unter on  main [!?] via go v1.19.2 
+$ ls
+_class  cmd  go.mod  go.sum  README.md  unter.go  vendor
+
+unter on  main [!?] via go v1.19.2 
+$ cat vendor/modules.txt 
+# github.com/google/uuid v1.3.0
+## explicit
+github.com/google/uuid
+
+unter on  main [!?] via go v1.19.2 
+$ rm -r vendor 
+
+unter on  main [!?] via go v1.19.2 
+$ go env
+GO111MODULE=""
+GOARCH="amd64"
+GOBIN=""
+GOCACHE="/home/miki/.cache/go-build"
+GOENV="/home/miki/.config/go/env"
+GOEXE=""
+GOEXPERIMENT=""
+GOFLAGS=""
+GOHOSTARCH="amd64"
+GOHOSTOS="linux"
+GOINSECURE=""
+GOMODCACHE="/home/miki/go/pkg/mod"
+GONOPROXY=""
+GONOSUMDB=""
+GOOS="linux"
+GOPATH="/home/miki/go"
+GOPRIVATE=""
+GOPROXY="https://proxy.golang.org,direct"
+GOROOT="/home/miki/sdk/go1.19.2"
+GOSUMDB="sum.golang.org"
+GOTMPDIR=""
+GOTOOLDIR="/home/miki/sdk/go1.19.2/pkg/tool/linux_amd64"
+GOVCS=""
+GOVERSION="go1.19.2"
+GCCGO="gccgo"
+GOAMD64="v1"
+AR="ar"
+CC="gcc"
+CXX="g++"
+CGO_ENABLED="1"
+GOMOD="/home/miki/teaching/practical-go-services/unter/go.mod"
+GOWORK=""
+CGO_CFLAGS="-g -O2"
+CGO_CPPFLAGS=""
+CGO_CXXFLAGS="-g -O2"
+CGO_FFLAGS="-g -O2"
+CGO_LDFLAGS="-g -O2"
+PKG_CONFIG="pkg-config"
+GOGCCFLAGS="-fPIC -m64 -pthread -Wl,--no-gc-sections -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build3218291271=/tmp/go-build -gno-record-gcc-switches"
+unter on  main [!?] via go v1.19.2 
+$ git add .
+
+unter on  main [+] via go v1.19.2 
+$ git ci -m 'health & start of /start'
+[main a505e6f] health & start of /start
+ 6 files changed, 90 insertions(+)
+ create mode 100644 _class/quotes.txt
+ create mode 100644 cmd/httpd/main.go
+ create mode 100644 go.sum
+
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 16, done.
+Counting objects: 100% (16/16), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (11/11), 1.76 KiB | 1.76 MiB/s, done.
+Total 11 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:353solutions/srv-2210.git
+   b6057cd..a505e6f  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides
+bad request
+
+unter on  main [!?] via go v1.19.2 
+$ curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides
+{"id":"215258ab-863b-4005-aaa7-68d04b35af0b"}%                                                                                          
+unter on  main [!?] via go v1.19.2 
+$curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides
+404 page not found
+
+unter on  main [!?] via go v1.19.2 
+$ curl -d'{"driver": "Bond", "kind": "private"}' http://localhost:8080/rides
+{"id":"098a354c-6e99-4b01-97af-01852145bdb3"}%                                                                                          
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/rides/098a354c-6e99-4b01-97af-01852145bdb3
+{"ID":"098a354c-6e99-4b01-97af-01852145bdb3","Driver":"Bond","Kind":2,"Start":"2022-10-24T19:01:58.452977031Z","End":"0001-01-01T00:00:00Z","Distance":0}%                                                                                                                      
+unter on  main [!?] via go v1.19.2 
+$ git add .
+
+unter on  main [+] via go v1.19.2 
+$ git ci -m 'start & get'
+[main 21b9ba9] start & get
+ 6 files changed, 183 insertions(+), 6 deletions(-)
+ create mode 100755 cmd/httpd/__debug_bin
+ create mode 100644 cmd/httpd/db.go
+
+unter on  main [⇡] via go v1.19.2 
+$ git rm -f cmd/httpd/__debug_bin
+rm 'cmd/httpd/__debug_bin'
+
+unter on  main [✘⇡] via go v1.19.2 
+$ git ci -m oops
+[main 98ab35f] oops
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100755 cmd/httpd/__debug_bin
+
+unter on  main [⇡] via go v1.19.2 
+$
