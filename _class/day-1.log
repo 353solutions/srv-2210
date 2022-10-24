@@ -428,4 +428,163 @@ go: finding module for package github.com/ardanlabs/conf
 go: found github.com/ardanlabs/conf in github.com/ardanlabs/conf v1.5.0
 
 unter on  main [!] via go v1.19.2 
+$go get github.com/ardanlabs/conf/v3
+go: added github.com/ardanlabs/conf/v3 v3.1.2
+
+unter on  main [!] via go v1.19.2 
+$ go mod tidy
+go: finding module for package github.com/ardanlabs/conf/v3
+go: found github.com/ardanlabs/conf/v3 in github.com/ardanlabs/conf/v3 v3.1.2
+
+unter on  main [!] via go v1.19.2 took 10s 
+❮ k
+
+unter on  main [!] via go v1.19.2 
+$ go run ./cmd/httpd 
+2022/10/24 23:32:11 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres"}
+2022/10/24 23:32:11 INFO: server starting on :8080
+^Csignal: interrupt
+
+unter on  main [!] via go v1.19.2 
+$ UNTER_ADDR=:9999 go run ./cmd/httpd
+2022/10/24 23:32:19 INFO: config=main.Config{Addr:":9999", DSN:"host=localhost user=postgres"}
+2022/10/24 23:32:19 INFO: server starting on :8080
+^Csignal: interrupt
+
+unter on  main [!] via go v1.19.2 took 13s 
+❮ UNTER_ADDR=:9999 go run ./cmd/httpd
+2022/10/24 23:35:33 INFO: config=main.Config{Addr:":9999", DSN:"host=localhost user=postgres"}
+2022/10/24 23:35:33 INFO: server starting on :8080
+^Csignal: interrupt
+
+unter on  main [!] via go v1.19.2 
+❮ UNTER_ADDR=9999 go run ./cmd/httpd 
+2022/10/24 23:35:37 ERROR: can't load config - bad port: missing ':' in address
+exit status 1
+unter on  main [!] via go v1.19.2 
+❮ UNTER_ADDR=:9999 go run ./cmd/httpd
+2022/10/24 23:37:01 INFO: config=main.Config{Addr:":9999", DSN:"host=localhost user=postgres"}
+2022/10/24 23:37:01 INFO: server starting on :9999
+^Csignal: interrupt
+
+unter on  main [!] via go v1.19.2 took 9s 
+❮ UNTER_ADDR=:9999 go run ./cmd/httpd
+2022/10/24 23:41:34 INFO: config=main.Config{Addr:":9999", DSN:"host=localhost user=postgres"}
+2022/10/24 23:41:34 INFO: server starting on :9999
+^Csignal: interrupt
+
+unter on  main [!] via go v1.19.2 took 2s 
+$ git add -u
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m 'config & server struct'
+[main 7b67ef2] config & server struct
+ 6 files changed, 284 insertions(+), 20 deletions(-)
+
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 21, done.
+Counting objects: 100% (21/21), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (11/11), 6.03 KiB | 6.03 MiB/s, done.
+Total 11 (delta 4), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To github.com:353solutions/srv-2210.git
+   190a865..7b67ef2  main -> main
+unter on  main via go v1.19.2 took 2s 
+$ go build ./cmd/httpd 
+
+unter on  main [?] via go v1.19.2 
+$ ./httpd&
+[1] 93567
+2022/10/24 23:43:49 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres"}                                          
+2022/10/24 23:43:49 INFO: server starting on :8080
+
+unter on  main [?] via go v1.19.2 
+✦ $ 
+
+unter on  main [?] via go v1.19.2 
+✦ $ curl http://localhost:8080/health
+2022/10/24 23:44:03 /health called (rid = d11d2cc2-0b64-4df7-94a9-3fba9a3cd7fc)
+2022/10/24 23:44:03 /health ended in 7.022µs (rid = d11d2cc2-0b64-4df7-94a9-3fba9a3cd7fc)
+OK
+
+unter on  main [?] via go v1.19.2 
+✦ $ kill %1
+[1]  + 93567 terminated  ./httpd                                                                                                        
+
+unter on  main [?] via go v1.19.2 
+$ 
+
+unter on  main [!?] via go v1.19.2 
+❮ ./httpd&                         
+
+unter on  main [!?] via go v1.19.2 
+$ rm httpd 
+
+unter on  main [!] via go v1.19.2 
+$go run ./cmd/httpd 
+2022/10/24 23:45:58 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres"}
+2022/10/24 23:45:58 INFO: server starting on :8080
+^Csignal: interrupt
+
+unter on  main [!] via go v1.19.2 
+$ go build ./cmd/httpd 
+
+unter on  main [!?] via go v1.19.2 
+$ ./httpd&
+[1] 99651
+2022/10/24 23:53:35 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres"}                                          
+2022/10/24 23:53:35 INFO: server starting on :8080
+
+unter on  main [!?] via go v1.19.2 
+✦ $ kill %1
+2022/10/24 23:53:39 INFO: caught signal terminated, shutting down                                                                       
+2022/10/24 23:53:39 INFO: server down
+[1]  + 99651 done       ./httpd
+
+unter on  main [!?] via go v1.19.2 
+$ rm httpd 
+
+unter on  main [!] via go v1.19.2 
+$ go run ./cmd/httpd/
+
+unter on  main [!] via go v1.19.2 
+$ go build ./cmd/httpd 
+
+unter on  main [!?] via go v1.19.2 
+$ ./httpd 
+2022/10/24 23:54:43 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres"}
+2022/10/24 23:54:43 INFO: server starting on :8080^C2022/10/24 23:54:45 INFO: caught signal interrupt, shutting down
+2022/10/24 23:54:45 INFO: server down
+
+unter on  main [!?] via go v1.19.2 
+$ ./httpd &
+[1] 100274
+2022/10/24 23:54:47 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres"}                                          
+2022/10/24 23:54:47 INFO: server starting on :8080
+
+unter on  main [!?] via go v1.19.2 
+✦ ❮ ./httpd  
+2022/10/24 23:54:49 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres"}
+2022/10/24 23:54:49 INFO: server starting on :8080
+2022/10/24 23:54:49 ERROR: listen tcp :8080: bind: address already in use
+2022/10/24 23:54:49 INFO: server down
+
+unter on  main [!?] via go v1.19.2 
+✦ $ echo $?
+1
+
+unter on  main [!?] via go v1.19.2 
+✦ $ kill %1`
+∙ 
+
+unter on  main [!?] via go v1.19.2 
+✦ $ kill %1
+2022/10/24 23:55:10 INFO: caught signal terminated, shutting down                                                                       
+2022/10/24 23:55:10 INFO: server down
+[1]  + 100274 done       ./httpd
+
+unter on  main [!?] via go v1.19.2 
 $

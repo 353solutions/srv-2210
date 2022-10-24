@@ -3,14 +3,18 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/353solutions/unter"
+
 	"github.com/ardanlabs/conf/v3"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
@@ -333,10 +337,36 @@ func main() {
 	r.HandleFunc("/rides/{id}/end", s.endHandler).Methods("POST")
 	http.Handle("/", addLogging(r))
 
-	log.Printf("INFO: server starting on %s", cfg.Addr)
-	if err := http.ListenAndServe(cfg.Addr, nil); err != nil {
-		log.Printf("ERROR: can't start - %s", err)
-		os.Exit(1)
-		// log.Fatalf("ERROR: can't start - %s", err)
+	srv := http.Server{
+		Addr:    cfg.Addr,
+		Handler: http.DefaultServeMux,
 	}
+
+	log.Printf("INFO: server starting on %s", cfg.Addr)
+	errCh := make(chan error)
+	go func() {
+		errCh <- srv.ListenAndServe()
+	}()
+
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
+
+	exitCode := 0
+	select {
+	case sig := <-sigCh:
+		log.Printf("INFO: caught signal %v, shutting down", sig)
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		defer cancel()
+		srv.Shutdown(ctx)
+	case err := <-errCh:
+		if !errors.Is(err, http.ErrServerClosed) {
+			log.Printf("ERROR: %s", err)
+			exitCode = 1
+		}
+	}
+
+	log.Printf("INFO: server down")
+	// cleanup
+	// s.db.Close() ...
+	os.Exit(exitCode)
 }
