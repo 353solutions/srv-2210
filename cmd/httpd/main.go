@@ -1,12 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/353solutions/unter"
+	"github.com/gorilla/mux"
 )
 
 /* CRUD: Create, Retrieve, Update, Delete
@@ -30,22 +33,121 @@ POST /rides/{id}/end
 GET /rides/{id}
 */
 
+var (
+	db = NewDB()
+)
+
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO:
 	fmt.Fprintln(w, "OK")
 }
 
-func startHandler(w http.ResponseWriter, r *http.Request) {
-	id := unter.NewID()
-	fmt.Fprintln(w, id)
+func kindFromString(s string) (unter.Kind, error) {
+	switch s {
+	case unter.Shared.String():
+		return unter.Shared, nil
+	case unter.Private.String():
+		return unter.Private, nil
+	}
+
+	return 0, fmt.Errorf("unknown kind: %s", s)
 }
 
+func startHandler(w http.ResponseWriter, r *http.Request) {
+	// Step 1: Unmarshal & Validate data
+	// {"driver": "Bond", "kind": "private"}
+	var req struct {
+		Driver string
+		Kind   string
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "bad json", http.StatusBadRequest)
+		return
+	}
+
+	k, err := kindFromString(req.Kind)
+	if err != nil {
+		http.Error(w, "bad kind", http.StatusBadRequest)
+		return
+	}
+
+	rd := unter.Ride{
+		ID:     unter.NewID(),
+		Driver: req.Driver,
+		Kind:   k,
+		Start:  time.Now().UTC(),
+	}
+	if err := rd.Validate(); err != nil {
+		http.Error(w, "bad request", http.StatusBadRequest)
+		return
+	}
+
+	// Step 2: Work
+	db.Add(rd)
+
+	// Step 3: Marshal & send response
+	resp := map[string]any{
+		"id": rd.ID,
+	}
+	/*
+		 if err := json.NewEncoder(w).Encode(resp); err != nil {
+			// Can't change response code
+		}
+	*/
+
+	if err := sendJSON(w, resp); err != nil {
+		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
+		return
+
+	}
+}
+
+// any = interface{} (go >= 1.18)
+func sendJSON(w http.ResponseWriter, val any) error {
+	data, err := json.Marshal(val)
+	if err != nil {
+		return err
+
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	return nil
+}
+
+// GET /rides/<id>
+func getHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	rd, err := db.Get(id)
+	if err != nil {
+		http.Error(w, "not found", http.StatusNotFound)
+		return
+	}
+
+	if err := sendJSON(w, rd); err != nil {
+		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
+		return
+
+	}
+}
+
+/* encoding/json
+Go -> JSON []byte: Marshal
+JSON -> Go []byte: Unmarshal
+Go -> JSON io.Writer: Encoder
+JSON -> Go io.Reader: Decoder
+*/
+
 func main() {
+	r := mux.NewRouter()
 	// routing
 	// - if route ends with / it's a prefix match
 	// - otherwise exact match
-	http.HandleFunc("/health", healthHandler)
-	http.HandleFunc("/rides", startHandler)
+	r.HandleFunc("/health", healthHandler).Methods("GET")
+	r.HandleFunc("/rides", startHandler).Methods("POST")
+	r.HandleFunc("/rides/{id}", getHandler).Methods("GET")
+	http.Handle("/", r)
 
 	addr := ":8080"
 	log.Printf("INFO: server starting on %s", addr)
