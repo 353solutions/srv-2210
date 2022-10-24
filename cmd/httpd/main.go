@@ -31,6 +31,8 @@ POST /rides/{id}/end
     distance
 
 GET /rides/{id}
+
+GET /rides?start=<time>&end=<time>
 */
 
 var (
@@ -114,6 +116,15 @@ func sendJSON(w http.ResponseWriter, val any) error {
 	return nil
 }
 
+type GetResponse struct {
+	ID       string     `json:"id,omitempty"`
+	Driver   string     `json:"driver,omitempty"`
+	Kind     string     `json:"kind,omitempty"`
+	Start    time.Time  `json:"start,omitempty"`
+	End      *time.Time `json:"end,omitempty"`
+	Distance float64    `json:"distance,omitempty"`
+}
+
 // GET /rides/<id>
 func getHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -125,7 +136,18 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := sendJSON(w, rd); err != nil {
+	resp := GetResponse{
+		ID:       rd.ID,
+		Driver:   rd.Driver,
+		Kind:     rd.Kind.String(),
+		Start:    rd.Start,
+		Distance: rd.Distance,
+	}
+	if !rd.End.Equal(time.Time{}) {
+		resp.End = &rd.End
+	}
+
+	if err := sendJSON(w, resp); err != nil {
 		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
 		return
 

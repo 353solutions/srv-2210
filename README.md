@@ -37,6 +37,9 @@ $ git clone https://github.com/353solutions/srv-2210.git unter
     - [HTTP status cats](https://http.cat/)
     - [encoding/json](https://pkg.go.dev/encoding/json)
     - [net/http](https://pkg.go.dev/net/http)
+    - [gorilla/mux](https://github.com/gorilla/mux) - HTTP router with more frills
+    - [chi](https://github.com/go-chi/chi) - A nice web framework
+        - Also Gin, Echo, Fiber, fasthttp, ...
 - Setting up
     - [Go SDK](https://go.dev/dl/)
         - `go version`
