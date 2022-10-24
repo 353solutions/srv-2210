@@ -33,6 +33,10 @@ $ git clone https://github.com/353solutions/srv-2210.git unter
 
 ### Links
 
+- Configuration
+    - [conf](https://pkg.go.dev/github.com/ardanlabs/conf/v3)
+    - [viper](https://github.com/spf13/viper) & [cobra](https://github.com/spf13/cobra)
+- ArdanLabs [service](https://github.com/ardanlabs/service) - More complex system
 - Validation
     - [cue](https://cuelang.org/)
     - [validator](https://pkg.go.dev/github.com/go-playground/validator/v10)
