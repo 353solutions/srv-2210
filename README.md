@@ -29,7 +29,7 @@ Clone the repo:
 $ git clone https://github.com/353solutions/srv-2210.git unter
 ```
 
-[Terminal Log](day-1.log)
+[Terminal Log](_class/day-1.log)
 
 ### Links
 
