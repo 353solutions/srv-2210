@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -9,6 +10,7 @@ import (
 	"time"
 
 	"github.com/353solutions/unter"
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
@@ -206,6 +208,45 @@ Go -> JSON io.Writer: Encoder
 JSON -> Go io.Reader: Decoder
 */
 
+type idKeyType int
+
+var idKey idKeyType = 1
+
+func RequestID(ctx context.Context) string {
+	rid := ctx.Value(idKey)
+	if rid == nil {
+		return "XXX"
+	}
+
+	s, ok := rid.(string)
+	if !ok {
+		return "XXX"
+	}
+	return s
+}
+
+// middleware
+func addLogging(h http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		// before
+		rid := uuid.NewString()
+		ctx := context.WithValue(r.Context(), idKey, rid)
+		r = r.Clone(ctx)
+
+		log.Printf("%s called (rid = %s)", r.URL.Path, rid)
+		start := time.Now()
+
+		h.ServeHTTP(w, r)
+
+		// after
+		duration := time.Since(start)
+		// exercise: Log the return HTTP status
+		log.Printf("%s ended in %v (rid = %s)", r.URL.Path, duration, rid)
+	}
+
+	return http.HandlerFunc(fn)
+}
+
 func main() {
 	r := mux.NewRouter()
 	// routing
@@ -215,7 +256,7 @@ func main() {
 	r.HandleFunc("/rides", startHandler).Methods("POST")
 	r.HandleFunc("/rides/{id}", getHandler).Methods("GET")
 	r.HandleFunc("/rides/{id}/end", endHandler).Methods("POST")
-	http.Handle("/", r)
+	http.Handle("/", addLogging(r))
 
 	addr := ":8080"
 	log.Printf("INFO: server starting on %s", addr)
