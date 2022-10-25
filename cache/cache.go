@@ -27,7 +27,7 @@ func Connect(ctx context.Context, addr string, ttl time.Duration) (*Cache, error
 	return &cache, nil
 }
 
-func (c Cache) Health(ctx context.Context) error {
+func (c *Cache) Health(ctx context.Context) error {
 	_, err := c.conn.Ping(ctx).Result()
 	return err
 }

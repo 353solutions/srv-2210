@@ -49,8 +49,24 @@ type Server struct {
 }
 
 func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO:
-	fmt.Fprintln(w, "OK")
+	ok := true
+	resp := map[string]any{
+		"db":    nil,
+		"cache": nil,
+	}
+	if err := s.db.Health(r.Context()); err != nil {
+		resp["db"] = err.Error()
+		ok = false
+	}
+	if err := s.cache.Health(r.Context()); err != nil {
+		resp["cache"] = err.Error()
+		ok = false
+	}
+
+	if !ok {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+	sendJSON(w, resp)
 }
 
 func kindFromString(s string) (unter.Kind, error) {
@@ -155,6 +171,7 @@ func (s *Server) endHandler(w http.ResponseWriter, r *http.Request) {
 	rd.Distance = req.Distance
 	rd.End = time.Now().UTC()
 	s.db.Update(r.Context(), rd)
+	// TODO: invalidate cache
 
 	resp := map[string]any{
 		"id":     id,
