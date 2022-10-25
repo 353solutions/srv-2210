@@ -24,6 +24,7 @@ import (
 	"context"
 	"database/sql"
 	_ "embed"
+	"errors"
 	"time"
 
 	_ "github.com/lib/pq"
@@ -35,6 +36,9 @@ var (
 
 	//go:embed sql/get.sql
 	getSQL string
+
+	//go:embed sql/update.sql
+	updateSQL string
 )
 
 type DB struct {
@@ -66,11 +70,12 @@ func (db *DB) Health(ctx context.Context) error {
 }
 
 type Ride struct {
-	ID       string
-	Driver   string
-	Kind     string
-	Start    time.Time
-	End      time.Time
+	ID     string
+	Driver string
+	Kind   string
+	Start  time.Time
+	End    time.Time
+	// End      sql.NullTime
 	Distance float64
 }
 
@@ -80,17 +85,24 @@ func (db *DB) Add(ctx context.Context, r Ride) error {
 	return err
 }
 
+var ErrNotFound = errors.New("not found")
+
 func (db *DB) Get(ctx context.Context, id string) (Ride, error) {
 	r := db.conn.QueryRowContext(ctx, getSQL, id)
 	var rd Ride
 	err := r.Scan(&rd.ID, &rd.Driver, &rd.Kind, &rd.Start, &rd.End, &rd.Distance)
-	if err != nil {
+	switch {
+	case errors.Is(err, sql.ErrNoRows):
+		return Ride{}, ErrNotFound
+	case err != nil:
 		return Ride{}, err
 	}
+
 	return rd, nil
 }
 
 func (db *DB) Update(ctx context.Context, r Ride) error {
-	// TODO
-	return nil
+	_, err := db.conn.ExecContext(ctx, updateSQL,
+		r.ID, r.Driver, r.Kind, r.Start, r.End, r.Distance)
+	return err
 }

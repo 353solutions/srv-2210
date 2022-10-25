@@ -109,4 +109,201 @@ Indexes:
     "rides_end" btree (end_time)
     "rides_start" btree (start_time)
 
-postgres=#
+postgres=#SELECT COUNT(id) FROM rides;
+ count 
+-------
+     0
+(1 row)
+
+postgres=# ^D\q
+
+unter on  main [!?] via go v1.19.2 took 32s 
+$ pgcli -p 5432 -U postgres -h localhost
+Server: PostgreSQL 15.0
+Version: 3.5.0
+Home: http://pgcli.com
+postgres@localhost:postgres> \d rides
++------------+-----------------------------+-----------+
+| Column     | Type                        | Modifiers |
+|------------+-----------------------------+-----------|
+| id         | text                        |  not null |
+| driver     | text                        |  not null |
+| kind       | text                        |  not null |
+| start_time | timestamp without time zone |  not null |
+| end_time   | timestamp without time zone |           |
+| distance   | double precision            |           |
++------------+-----------------------------+-----------+
+Indexes:
+    "rides_pkey" PRIMARY KEY, btree (id)
+    "rides_end" btree (end_time)
+    "rides_start" btree (start_time)
+
+Time: 0.015s
+postgres@localhost:postgres>                                                                                                            
+Goodbye!
+unter on  main [!?] via go v1.19.2 took 11s 
+$ go mod tidy
+go: finding module for package github.com/lib/pq
+go: finding module for package github.com/353solutions/unter/db
+^C
+
+unter on  main [✘!?] via go v1.19.2 took 2s 
+$ mv db/sql/db.go db 
+
+unter on  main [✘!?] via go v1.19.2 
+$ go mod tidy
+go: finding module for package github.com/lib/pq
+go: found github.com/lib/pq in github.com/lib/pq v1.10.7
+
+unter on  main [✘!?] via go v1.19.2 
+$ go run ./cmd/httpd 
+2022/10/25 20:52:00 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres password=s3cr3t sslmode=disable"}
+2022/10/25 20:52:00 INFO: server starting on :8080
+^C2022/10/25 20:52:10 INFO: caught signal interrupt, shutting down
+2022/10/25 20:52:10 INFO: server down
+
+unter on  main [✘!?] via go v1.19.2 took 10s 
+$ git add .
+
+unter on  main [✘+] via go v1.19.2 
+$ git ci -m 'connecting to postgres'
+[main ca6f53b] connecting to postgres
+ 7 files changed, 189 insertions(+), 104 deletions(-)
+ delete mode 100644 cmd/httpd/db.go
+ create mode 100644 db/db.go
+
+unter on  main [⇡] via go v1.19.2 
+$git push
+Enumerating objects: 22, done.
+Counting objects: 100% (22/22), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (12/12), 3.81 KiB | 3.81 MiB/s, done.
+Total 12 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To github.com:353solutions/srv-2210.git
+   882c892..ca6f53b  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ git status -u
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   db/db.go
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+unter on  main [!] via go v1.19.2 
+$ git log cmd/httpd/main.go 
+
+unter on  main [!] via go v1.19.2 
+$ ls cmd/httpd 
+config.go  main.go
+
+unter on  main [!] via go v1.19.2 
+$ git add cmd/httpd/config.go
+The following paths are ignored by one of your .gitignore files:
+cmd/httpd
+hint: Use -f if you really want to add them.
+hint: Turn this message off by running
+hint: "git config advice.addIgnoredFile false"
+unter on  main [!] via go v1.19.2 
+$ git add -f cmd/httpd/config.go
+
+unter on  main [!+] via go v1.19.2 
+$ git commit -m 'config'
+[main d70f741] config
+ 1 file changed, 65 insertions(+)
+ create mode 100644 cmd/httpd/config.go
+
+unter on  main [!⇡] via go v1.19.2 
+$ git pushj
+git: 'pushj' is not a git command. See 'git --help'.
+
+The most similar command is
+	push
+
+unter on  main [!⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 8, done.
+Counting objects: 100% (8/8), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 958 bytes | 958.00 KiB/s, done.
+Total 5 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:353solutions/srv-2210.git
+   ca6f53b..d70f741  main -> main
+
+unter on  main [!] via go v1.19.2 took 2s 
+$ go run ./cmd/httpd 
+2022/10/25 21:04:47 INFO: config=main.Config{Addr:":8080", DSN:"host=localhost user=postgres password=s3cr3t sslmode=disable"}
+2022/10/25 21:04:47 INFO: server starting on :80802022/10/25 21:05:51 /rides called (rid = 6ff721b5-f55a-46dc-84e4-1ad3d3c2e53a)
+2022/10/25 21:05:51 /rides ended in 24.927616ms (rid = 6ff721b5-f55a-46dc-84e4-1ad3d3c2e53a)
+^C2022/10/25 21:06:52 INFO: caught signal interrupt, shutting down
+2022/10/25 21:06:52 INFO: server down
+
+unter on  main [!] via go v1.19.2 took 2m4s 
+$ git add .
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m 'add to database'
+[main ec416c2] add to database
+ 2 files changed, 35 insertions(+), 3 deletions(-)
+
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 935 bytes | 935.00 KiB/s, done.
+Total 7 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To github.com:353solutions/srv-2210.git
+   d70f741..ec416c2  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ curl http://localhost:8080/rides/6ff721b5-f55a-46dc-84e4-1ad3d3c2e53a
+not found
+
+unter on  main [!] via go v1.19.2 
+$ pgcli -p 5432 -U postgres -h localhost
+Server: PostgreSQL 15.0
+Version: 3.5.0
+Home: http://pgcli.com
+postgres@localhost:postgresSELECT * FROM rides;
++--------------------------------------+--------+---------+----------------------------+---------------------+----------+
+| id                                   | driver | kind    | start_time                 | end_time            | distance |
+|--------------------------------------+--------+---------+----------------------------+---------------------+----------|
+| 8d4a415a-bac1-4bf3-ac63-6867033a6ef4 | bond   | private | 2022-10-25 18:05:51.492444 | 0001-01-01 00:00:00 | 0.0      |
++--------------------------------------+--------+---------+----------------------------+---------------------+----------+
+SELECT 1
+Time: 0.007s
+postgres@localhost:postgres> \q
+Goodbye!
+
+unter on  main [!] via go v1.19.2 took 13s 
+$ curl http://localhost:8080/rides/8d4a415a-bac1-4bf3-ac63-6867033a6ef4
+{"id":"8d4a415a-bac1-4bf3-ac63-6867033a6ef4","driver":"bond","kind":"private","start":"2022-10-25T18:05:51.492444Z"}%                   
+unter on  main [!] via go v1.19.2 
+$ git add -u
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m 'get from database'
+[main 06306db] get from database
+ 2 files changed, 15 insertions(+), 5 deletions(-)
+
+unter on  main [⇡] via go v1.19.2 
+$ git add -u
+
+unter on  main [+⇡] via go v1.19.2 
+$ git commit -m 'empty update'
+[main 3974fb6] empty update
+ 1 file changed, 5 insertions(+)
+
+unter on  main [⇡] via go v1.19.2 
+$

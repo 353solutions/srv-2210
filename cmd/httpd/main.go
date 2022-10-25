@@ -145,16 +145,14 @@ func (s *Server) endHandler(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
-	/* FIXME
-	rd, err := s.db.Get(id)
+	rd, err := s.db.Get(r.Context(), id)
 	if err != nil {
 		http.Error(w, "not found", http.StatusNotFound)
 		return
 	}
 	rd.Distance = req.Distance
 	rd.End = time.Now().UTC()
-	s.db.Add(rd)
-	*/
+	s.db.Update(r.Context(), rd)
 
 	resp := map[string]any{
 		"id":     id,
@@ -164,7 +162,6 @@ func (s *Server) endHandler(w http.ResponseWriter, r *http.Request) {
 	if err := sendJSON(w, resp); err != nil {
 		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
 		return
-
 	}
 }
 
@@ -194,8 +191,12 @@ func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	rd, err := s.db.Get(r.Context(), id)
-	if err != nil {
+	switch {
+	case errors.Is(err, db.ErrNotFound):
 		http.Error(w, "not found", http.StatusNotFound)
+		return
+	case err != nil:
+		http.Error(w, "can't get", http.StatusInternalServerError)
 		return
 	}
 
