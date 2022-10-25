@@ -25,6 +25,8 @@ Miki Tebeka
 
 ### Links
 
+- [copier](https://github.com/jinzhu/copier) - Copy struct to another
+- [multierr](https://pkg.go.dev/go.uber.org/multierr) - Combine errors
 - Databases
     - [database/sql](https://pkg.go.dev/database/sql)
     - [sqlx](https://jmoiron.github.io/sqlx/)
@@ -33,6 +35,7 @@ Miki Tebeka
     - [gorm](https://gorm.io/) - ORM
     - [pgcli](https://www.pgcli.com/) - PostgreSQL command line client
     - [go-redis](https://redis.uptrace.dev/)
+    - [bbolt](https://github.com/etcd-io/bbolt)
 - Logging & Metrics
     - [log](https://pkg.go.dev/log)
     - [uber/zap](https://pkg.go.dev/go.uber.org/zap)
@@ -40,6 +43,7 @@ Miki Tebeka
         - [expvarmon](https://github.com/divan/expvarmon)
     - [Open Telemetry](https://opentelemetry.io/docs/instrumentation/go/getting-started/)
     - [Let's talk about logging](https://dave.cheney.net/2015/11/05/lets-talk-about-logging) by Dave Cheney
+    - [Prometheus metric types](https://prometheus.io/docs/concepts/metric_types/)
 
 ### Data & Other
 
