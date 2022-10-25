@@ -30,7 +30,9 @@ Miki Tebeka
     - [sqlx](https://jmoiron.github.io/sqlx/)
     - [lig/pg](https://pkg.go.dev/github.com/lib/pq)
     - [sqlc](https://sqlc.dev/) - Generate code
-    - [gorm](https://gorm.io/)
+    - [gorm](https://gorm.io/) - ORM
+    - [pgcli](https://www.pgcli.com/) - PostgreSQL command line client
+    - [go-redis](https://redis.uptrace.dev/)
 - Logging & Metrics
     - [log](https://pkg.go.dev/log)
     - [uber/zap](https://pkg.go.dev/go.uber.org/zap)
@@ -41,9 +43,9 @@ Miki Tebeka
 
 ### Data & Other
 
-- `docker exec -it <id> redis-cli`
 - `docker exec -it <id> psql -U postgres`
-    - or use pgcli
+    - or `pgcli -p 5432 -U postgres -h localhost`
+- `docker exec -it <id> redis-cli`
 
 
 ---
