@@ -16,6 +16,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/353solutions/unter"
+	"github.com/353solutions/unter/cache"
 	"github.com/353solutions/unter/db"
 )
 
@@ -43,7 +44,8 @@ GET /rides?start=<time>&end=<time>
 */
 
 type Server struct {
-	db *db.DB
+	db    *db.DB
+	cache *cache.Cache
 }
 
 func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -190,6 +192,15 @@ type GetResponse struct {
 func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
+
+	data, err := s.cache.Get(r.Context(), id)
+	if err == nil {
+		log.Printf("INFO: cache hit - %s", id)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(data)
+		return
+	}
+
 	rd, err := s.db.Get(r.Context(), id)
 	switch {
 	case errors.Is(err, db.ErrNotFound):
@@ -211,10 +222,14 @@ func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
 		resp.End = &rd.End
 	}
 
+	data, err = json.Marshal(resp)
+	if err == nil {
+		s.cache.Set(r.Context(), id, data)
+	}
+
 	if err := sendJSON(w, resp); err != nil {
 		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
 		return
-
 	}
 }
 
@@ -277,12 +292,21 @@ func main() {
 	defer cancel()
 	db, err := db.Connect(ctx, cfg.DSN)
 	if err != nil {
-		log.Printf("ERROR: can't connect to database- %s", err)
+		log.Printf("ERROR: can't connect to database - %s", err)
+		os.Exit(1)
+	}
+
+	ctx, cancel = context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	cache, err := cache.Connect(ctx, cfg.CacheAddr, time.Minute)
+	if err != nil {
+		log.Printf("ERROR: can't connect to cache - %s", err)
 		os.Exit(1)
 	}
 
 	s := Server{
-		db: db, // injection
+		db:    db, // injection
+		cache: cache,
 	}
 	// routing
 	// - if route ends with / it's a prefix match

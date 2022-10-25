@@ -16,8 +16,10 @@ import (
 // outside: viper + cobra
 
 type Config struct {
-	Addr string `conf:"default::8080,env:ADDR"`
-	DSN  string `conf:"default:host=localhost user=postgres password=s3cr3t sslmode=disable,env:DSN"`
+	Addr      string `conf:"default::8080,env:ADDR"`
+	DSN       string `conf:"default:host=localhost user=postgres password=s3cr3t sslmode=disable,env:DSN"`
+	CacheAddr string `conf:"default:localhost:6379,env:CACHE"`
+	// TODO: Cache TTL
 }
 
 func loadConfig() (Config, error) {
