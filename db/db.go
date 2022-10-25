@@ -89,3 +89,8 @@ func (db *DB) Get(ctx context.Context, id string) (Ride, error) {
 	}
 	return rd, nil
 }
+
+func (db *DB) Update(ctx context.Context, r Ride) error {
+	// TODO
+	return nil
+}
