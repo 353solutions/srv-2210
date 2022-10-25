@@ -1,3 +1,8 @@
+Two rules of database systems
+1. It takes 7 years minimum to create a production-ready database system
+2. You're not an exception to rule 1
+    - Luca Candela
+    
 ...every time I add the sqlite amalgamation — sqlite.c and sqlite.h — to my
 @PlatformIO_Org project, it adds Doom as one of my dependencies.
     - Joe Castillo

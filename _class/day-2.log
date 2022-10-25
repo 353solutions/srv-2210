@@ -1,0 +1,112 @@
+docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+unter on  main [!?] via go v1.19.2 
+$ docker images
+REPOSITORY                                      TAG                                    IMAGE ID       CREATED         SIZE
+<none>                                          <none>                                 aa7eb11031be   2 days ago      999MB
+<none>                                          <none>                                 397386b67cc1   2 days ago      999MB
+<none>                                          <none>                                 0fff7511bdfc   2 days ago      999MB
+17ff51f0-2aee-4bec-ae29-84011d070dba            acb20a4d-e7d8-4989-b9a6-9d19fd576bac   9df87b04e7be   2 days ago      86.9MB
+91cf07c1-c82a-4d66-b380-c13513cf02e5            12fa5ad0-a8e7-410a-afbc-6e7e4c19cd0d   9df87b04e7be   2 days ago      86.9MB
+<none>                                          <none>                                 c2c0673ff131   2 days ago      999MB
+ffd91b87-5bcb-41a9-b6a2-815ef486ed9a            f5fa9818-3d58-46f1-8219-6b6a6154a09d   8e67a7cab809   2 days ago      86.9MB
+<none>                                          <none>                                 ff8da0936bcf   2 days ago      999MB
+e8113530-3d47-47c1-9d62-ce3b87303158            d8cbde38-d803-4f15-9086-f917cd7aeb13   abf1612d89ed   2 days ago      86.9MB
+<none>                                          <none>                                 f871f59ef8b8   2 days ago      999MB
+<none>                                          <none>                                 754cd5070093   2 days ago      86.9MB
+tc                                              latest                                 7df057926b18   2 days ago      86.9MB
+<none>                                          <none>                                 4986e90be8cd   2 days ago      86.9MB
+unterd                                          latest                                 d73481c6d72e   7 days ago      98.7MB
+<none>                                          <none>                                 0eb53cc9b90c   8 days ago      94.4MB
+<none>                                          <none>                                 9041d4ecd3cc   8 days ago      94.4MB
+<none>                                          <none>                                 17e5eab73db2   8 days ago      94.4MB
+postgres                                        15-alpine                              cc994726847f   10 days ago     218MB
+miki/app                                        latest                                 e49769d2e653   2 weeks ago     87.2MB
+redis                                           7-alpine                               d29f18e8bc92   2 weeks ago     28.4MB
+postgres                                        14-alpine                              aac01494762a   2 weeks ago     216MB
+golang                                          1.19                                   8827cedaa309   2 weeks ago     992MB
+maverick/airflow-poc-inference                  latest                                 983429a799f3   3 weeks ago     3.08GB
+<none>                                          <none>                                 a35493b2faa4   3 weeks ago     2.91GB
+maverick/airflow-poc                            latest                                 3673c4e2f272   3 weeks ago     527MB
+<none>                                          <none>                                 7f34dbf5dda7   3 weeks ago     527MB
+<none>                                          <none>                                 94a1d1afadb4   3 weeks ago     527MB
+maverick/airflow-poc-httpd                      latest                                 5443f6a76895   3 weeks ago     526MB
+<none>                                          <none>                                 c0a191240ab6   3 weeks ago     340MB
+<none>                                          <none>                                 f9dce456bad1   4 weeks ago     340MB
+python                                          3.7-slim                               c1d0bab51bbf   6 weeks ago     123MB
+python                                          3.10-bullseye                          b62e4294564c   2 months ago    922MB
+alpine                                          3.16                                   9c6f07244728   2 months ago    5.54MB
+python                                          3.10-slim                              f967afcd009f   2 months ago    126MB
+golang                                          1.19-bullseye                          da8d5a6f7a03   2 months ago    992MB
+debian                                          bullseye-slim                          6a8065e4ba13   2 months ago    80.4MB
+mcr.microsoft.com/vscode/devcontainers/python   0-3.10-bullseye                        53f071753966   6 months ago    1.23GB
+testcontainers/ryuk                             0.3.3                                  64f4b02dc986   12 months ago   12MB
+unter on  main [!?] via go v1.19.2 
+$ docker images | grep postgres
+postgres                                        15-alpine                              cc994726847f   10 days ago     218MB
+postgres                                        14-alpine                              aac01494762a   2 weeks ago     216MB
+
+unter on  main [!?] via go v1.19.2 
+$ docker pull postgres:15-alpine
+15-alpine: Pulling from library/postgres
+Digest: sha256:162ece254c2ed16362999971340ab523bd8e085c5175b3aff91201ebd32f21bd
+Status: Image is up to date for postgres:15-alpine
+docker.io/library/postgres:15-alpine
+
+unter on  main [!?] via go v1.19.2 took 2s 
+❮ docker run \ 
+    -d \
+    -p 5432:5432 \
+    -e POSTGRES_PASSWORD=s3cr3t \
+    postgres:15-alpine 
+b82135cd6ffc1479f52dd4b887b5baedd59734540f1e202aa9ff49b8eac4cc60
+
+unter on  main [!?] via go v1.19.2 
+$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+b82135cd6ffc   postgres:15-alpine   "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   wonderful_poitras
+
+unter on  main [!?] via go v1.19.2 
+$ docker rm -f b82135cd6ffc
+b82135cd6ffc
+
+unter on  main [!?] via go v1.19.2 
+$./_class/run-db.sh 
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+
+unter on  main [!?] via go v1.19.2 
+$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+84ebdd917b90   postgres:15-alpine   "docker-entrypoint.s…"   6 seconds ago   Up 4 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   eager_poitras
+
+unter on  main [!?] via go v1.19.2 
+$ docker exec -it 84ebdd917b90 psql -U postgres
+psql (15.0)
+Type "help" for help.
+
+postgres=# \d
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ public | rides | table | postgres
+(1 row)
+
+postgres=# \d rides
+                           Table "public.rides"
+   Column   |            Type             | Collation | Nullable | Default 
+------------+-----------------------------+-----------+----------+---------
+ id         | text                        |           | not null | 
+ driver     | text                        |           | not null | 
+ kind       | text                        |           | not null | 
+ start_time | timestamp without time zone |           | not null | 
+ end_time   | timestamp without time zone |           |          | 
+ distance   | double precision            |           |          | 
+Indexes:
+    "rides_pkey" PRIMARY KEY, btree (id)
+    "rides_end" btree (end_time)
+    "rides_start" btree (start_time)
+
+postgres=#

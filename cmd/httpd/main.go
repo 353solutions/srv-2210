@@ -9,13 +9,12 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 	"time"
 
 	"github.com/353solutions/unter"
+	"github.com/353solutions/unter/db"
 
-	"github.com/ardanlabs/conf/v3"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
@@ -44,7 +43,7 @@ GET /rides?start=<time>&end=<time>
 */
 
 type Server struct {
-	db *DB
+	db *db.DB
 }
 
 func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -93,7 +92,7 @@ func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Step 2: Work
-	s.db.Add(rd)
+	// FIXME s.db.Add(rd)
 
 	// Step 3: Marshal & send response
 	resp := map[string]any{
@@ -136,6 +135,7 @@ func (s *Server) endHandler(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
+	/* FIXME
 	rd, err := s.db.Get(id)
 	if err != nil {
 		http.Error(w, "not found", http.StatusNotFound)
@@ -144,9 +144,10 @@ func (s *Server) endHandler(w http.ResponseWriter, r *http.Request) {
 	rd.Distance = req.Distance
 	rd.End = time.Now().UTC()
 	s.db.Add(rd)
+	*/
 
 	resp := map[string]any{
-		"id":     rd.ID,
+		"id":     id,
 		"action": "end",
 	}
 
@@ -162,8 +163,8 @@ func sendJSON(w http.ResponseWriter, val any) error {
 	data, err := json.Marshal(val)
 	if err != nil {
 		return err
-
 	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 	return nil
@@ -180,9 +181,9 @@ type GetResponse struct {
 
 // GET /rides/<id>
 func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
+	/* FIXME
 	vars := mux.Vars(r)
 	id := vars["id"]
-
 	rd, err := s.db.Get(id)
 	if err != nil {
 		http.Error(w, "not found", http.StatusNotFound)
@@ -199,7 +200,9 @@ func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
 	if !rd.End.Equal(time.Time{}) {
 		resp.End = &rd.End
 	}
+	*/
 
+	resp := "OK"
 	if err := sendJSON(w, resp); err != nil {
 		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
 		return
@@ -253,63 +256,6 @@ func addLogging(h http.Handler) http.Handler {
 	return http.HandlerFunc(fn)
 }
 
-// config: defaults < config file < environment < command line options
-// defaults: struct
-// config file: YAML, TOML
-// environment: os.Getenv
-// command line: flag
-
-// outside: viper + cobra
-
-type Config struct {
-	Addr string `conf:"default::8080,env:ADDR"`
-	DSN  string `conf:"default:host=localhost user=postgres,env=DSN"`
-}
-
-func loadConfig() (Config, error) {
-	var c Config
-	if _, err := conf.Parse("UNTER", &c); err != nil {
-		return Config{}, err
-	}
-
-	if err := c.Validate(); err != nil {
-		return Config{}, err
-	}
-
-	return c, nil
-}
-
-func (c Config) Validate() error {
-	if err := validAddr(c.Addr); err != nil {
-		return fmt.Errorf("bad port: %s", err)
-	}
-
-	if c.DSN == "" {
-		return fmt.Errorf("missing DSN")
-	}
-
-	return nil
-}
-
-func validAddr(addr string) error {
-	i := strings.Index(addr, ":")
-	if i == -1 {
-		return fmt.Errorf("missing ':' in address")
-	}
-
-	var port int
-	if _, err := fmt.Sscanf(addr[i+1:], "%d", &port); err != nil {
-		return fmt.Errorf("bad port")
-	}
-
-	const maxPort = 65535
-	if port < 0 || port > maxPort {
-		return fmt.Errorf("port %d our of range [0,%d]", port, maxPort)
-	}
-
-	return nil
-}
-
 func main() {
 	cfg, err := loadConfig()
 	if err != nil {
@@ -319,7 +265,9 @@ func main() {
 	log.Printf("INFO: config=%#v", cfg)
 	r := mux.NewRouter()
 
-	db, err := NewDB(cfg.DSN)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	db, err := db.Connect(ctx, cfg.DSN)
 	if err != nil {
 		log.Printf("ERROR: can't connect to database- %s", err)
 		os.Exit(1)
