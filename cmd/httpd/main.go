@@ -12,11 +12,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/353solutions/unter"
-	"github.com/353solutions/unter/db"
-
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
+
+	"github.com/353solutions/unter"
+	"github.com/353solutions/unter/db"
 )
 
 /* CRUD: Create, Retrieve, Update, Delete
@@ -93,6 +93,16 @@ func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Step 2: Work
 	// FIXME s.db.Add(rd)
+	dbr := db.Ride{
+		ID:     rd.ID,
+		Driver: rd.Driver,
+		Kind:   rd.Kind.String(),
+		Start:  rd.Start,
+	}
+	if err := s.db.Add(r.Context(), dbr); err != nil {
+		http.Error(w, "can't insert", http.StatusInternalServerError)
+		return
+	}
 
 	// Step 3: Marshal & send response
 	resp := map[string]any{
