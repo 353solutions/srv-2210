@@ -10,7 +10,43 @@ Miki Tebeka
     - [Rest of classes](https://www.linkedin.com/learning/instructors/miki-tebeka)
 - [Go Brain Teasers](https://pragprog.com/titles/d-gobrain/go-brain-teasers/) book
 
+---
+## Day 2
 
+### Agenda
+
+- Databases
+- Working with `database/sql`
+- Working with redis
+- Logging
+- Monitoring 
+
+[Terminal Log](day-2.log)
+
+### Links
+
+- Databases
+    - [database/sql](https://pkg.go.dev/database/sql)
+    - [sqlx](https://jmoiron.github.io/sqlx/)
+    - [lig/pg](https://pkg.go.dev/github.com/lib/pq)
+    - [sqlc](https://sqlc.dev/) - Generate code
+    - [gorm](https://gorm.io/)
+- Logging & Metrics
+    - [log](https://pkg.go.dev/log)
+    - [uber/zap](https://pkg.go.dev/go.uber.org/zap)
+    - [expvar](https://pkg.go.dev/expvar)
+        - [expvarmon](https://github.com/divan/expvarmon)
+    - [Open Telemetry](https://opentelemetry.io/docs/instrumentation/go/getting-started/)
+    - [Let's talk about logging](https://dave.cheney.net/2015/11/05/lets-talk-about-logging) by Dave Cheney
+
+### Data & Other
+
+- `docker exec -it <id> redis-cli`
+- `docker exec -it <id> psql -U postgres`
+    - or use pgcli
+
+
+---
 
 ## Day 1
 
