@@ -32,6 +32,9 @@ import (
 var (
 	//go:embed sql/insert.sql
 	insertSQL string
+
+	//go:embed sql/get.sql
+	getSQL string
 )
 
 type DB struct {
@@ -75,4 +78,14 @@ func (db *DB) Add(ctx context.Context, r Ride) error {
 	_, err := db.conn.ExecContext(ctx, insertSQL,
 		r.ID, r.Driver, r.Kind, r.Start, r.End, r.Distance)
 	return err
+}
+
+func (db *DB) Get(ctx context.Context, id string) (Ride, error) {
+	r := db.conn.QueryRowContext(ctx, getSQL, id)
+	var rd Ride
+	err := r.Scan(&rd.ID, &rd.Driver, &rd.Kind, &rd.Start, &rd.End, &rd.Distance)
+	if err != nil {
+		return Ride{}, err
+	}
+	return rd, nil
 }

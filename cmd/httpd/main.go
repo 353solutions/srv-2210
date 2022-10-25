@@ -191,10 +191,9 @@ type GetResponse struct {
 
 // GET /rides/<id>
 func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
-	/* FIXME
 	vars := mux.Vars(r)
 	id := vars["id"]
-	rd, err := s.db.Get(id)
+	rd, err := s.db.Get(r.Context(), id)
 	if err != nil {
 		http.Error(w, "not found", http.StatusNotFound)
 		return
@@ -203,16 +202,14 @@ func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
 	resp := GetResponse{
 		ID:       rd.ID,
 		Driver:   rd.Driver,
-		Kind:     rd.Kind.String(),
+		Kind:     rd.Kind,
 		Start:    rd.Start,
 		Distance: rd.Distance,
 	}
 	if !rd.End.Equal(time.Time{}) {
 		resp.End = &rd.End
 	}
-	*/
 
-	resp := "OK"
 	if err := sendJSON(w, resp); err != nil {
 		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
 		return
