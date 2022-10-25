@@ -20,6 +20,7 @@ type Config struct {
 	DSN       string `conf:"default:host=localhost user=postgres password=s3cr3t sslmode=disable,env:DSN"`
 	CacheAddr string `conf:"default:localhost:6379,env:CACHE"`
 	// TODO: Cache TTL
+	LogFile string `conf:"env:LOG_FILE"`
 }
 
 func loadConfig() (Config, error) {

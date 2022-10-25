@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"expvar"
 	"fmt"
 	"log"
 	"net/http"
@@ -18,6 +19,7 @@ import (
 	"github.com/353solutions/unter"
 	"github.com/353solutions/unter/cache"
 	"github.com/353solutions/unter/db"
+	"github.com/353solutions/unter/logger"
 )
 
 /* CRUD: Create, Retrieve, Update, Delete
@@ -43,9 +45,14 @@ GET /rides/{id}
 GET /rides?start=<time>&end=<time>
 */
 
+var (
+	getCalls = expvar.NewInt("get.calls")
+)
+
 type Server struct {
 	db    *db.DB
 	cache *cache.Cache
+	log   *log.Logger
 }
 
 func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -205,10 +212,24 @@ type GetResponse struct {
 	Distance float64    `json:"distance,omitempty"`
 }
 
+func ctxLogger(logger *log.Logger, ctx context.Context) *log.Logger {
+	rid := RequestID(ctx)
+	return log.New(
+		logger.Writer(),
+		fmt.Sprintf("%s <%s> ", logger.Prefix(), rid),
+		logger.Flags(),
+	)
+}
+
 // GET /rides/<id>
 func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
+	// exercise: Add a middleware that will expose metircs for number of calls, number of errors
+	// extra: total bytes sent
+	getCalls.Add(1)
 	vars := mux.Vars(r)
 	id := vars["id"]
+
+	log := ctxLogger(s.log, r.Context())
 
 	data, err := s.cache.Get(r.Context(), id)
 	if err == nil {
@@ -257,9 +278,9 @@ Go -> JSON io.Writer: Encoder
 JSON -> Go io.Reader: Decoder
 */
 
-type idKeyType int
+type keyType int
 
-var idKey idKeyType = 1
+var idKey keyType = 1
 
 func RequestID(ctx context.Context) string {
 	rid := ctx.Value(idKey)
@@ -275,7 +296,7 @@ func RequestID(ctx context.Context) string {
 }
 
 // middleware
-func addLogging(h http.Handler) http.Handler {
+func addLogging(log *log.Logger, h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		// before
 		rid := uuid.NewString()
@@ -296,20 +317,38 @@ func addLogging(h http.Handler) http.Handler {
 	return http.HandlerFunc(fn)
 }
 
+var version = "1.2.3"
+
 func main() {
 	cfg, err := loadConfig()
 	if err != nil {
 		log.Printf("ERROR: can't load config - %s", err)
 		os.Exit(1)
 	}
-	log.Printf("INFO: config=%#v", cfg)
+
+	expvar.NewString("version").Set(version)
+	host, err := os.Hostname()
+	if err != nil {
+		host = "UNKNOWN"
+	}
+	expvar.NewString("host").Set(host)
+	// service name....
+
+	logger, err := logger.New("[UNTER] ", cfg.LogFile)
+	if err != nil {
+		log.Printf("ERROR: can't load logger - %s", err)
+		os.Exit(1)
+
+	}
+
+	logger.Printf("INFO: config=%#v", cfg)
 	r := mux.NewRouter()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 	db, err := db.Connect(ctx, cfg.DSN)
 	if err != nil {
-		log.Printf("ERROR: can't connect to database - %s", err)
+		logger.Printf("ERROR: can't connect to database - %s", err)
 		os.Exit(1)
 	}
 
@@ -317,13 +356,14 @@ func main() {
 	defer cancel()
 	cache, err := cache.Connect(ctx, cfg.CacheAddr, time.Minute)
 	if err != nil {
-		log.Printf("ERROR: can't connect to cache - %s", err)
+		logger.Printf("ERROR: can't connect to cache - %s", err)
 		os.Exit(1)
 	}
 
 	s := Server{
 		db:    db, // injection
 		cache: cache,
+		log:   logger,
 	}
 	// routing
 	// - if route ends with / it's a prefix match
@@ -332,14 +372,14 @@ func main() {
 	r.HandleFunc("/rides", s.startHandler).Methods("POST")
 	r.HandleFunc("/rides/{id}", s.getHandler).Methods("GET")
 	r.HandleFunc("/rides/{id}/end", s.endHandler).Methods("POST")
-	http.Handle("/", addLogging(r))
+	http.Handle("/", addLogging(logger, r))
 
 	srv := http.Server{
 		Addr:    cfg.Addr,
 		Handler: http.DefaultServeMux,
 	}
 
-	log.Printf("INFO: server starting on %s", cfg.Addr)
+	logger.Printf("INFO: server starting on %s", cfg.Addr)
 	errCh := make(chan error)
 	go func() {
 		errCh <- srv.ListenAndServe()
@@ -351,18 +391,18 @@ func main() {
 	exitCode := 0
 	select {
 	case sig := <-sigCh:
-		log.Printf("INFO: caught signal %v, shutting down", sig)
+		logger.Printf("INFO: caught signal %v, shutting down", sig)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
 		srv.Shutdown(ctx)
 	case err := <-errCh:
 		if !errors.Is(err, http.ErrServerClosed) {
-			log.Printf("ERROR: %s", err)
+			logger.Printf("ERROR: %s", err)
 			exitCode = 1
 		}
 	}
 
-	log.Printf("INFO: server down")
+	logger.Printf("INFO: server down")
 	// cleanup
 	// s.db.Close() ...
 	os.Exit(exitCode)

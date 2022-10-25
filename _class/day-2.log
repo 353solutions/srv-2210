@@ -306,4 +306,203 @@ $ git commit -m 'empty update'
  1 file changed, 5 insertions(+)
 
 unter on  main [⇡] via go v1.19.2 
+$git push
+Enumerating objects: 17, done.
+Counting objects: 100% (17/17), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (11/11), 1.10 KiB | 1.10 MiB/s, done.
+Total 11 (delta 5), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (5/5), completed with 3 local objects.
+To github.com:353solutions/srv-2210.git
+   ec416c2..3974fb6  main -> main
+
+unter on  main [!] via go v1.19.2 took 2s 
+$ curl -d'{"distance": 9.2}' http://localhost:8080/rides/8d4a415a-bac1-4bf3-ac63-6867033a6ef4/end
+{"action":"end","id":"8d4a415a-bac1-4bf3-ac63-6867033a6ef4"}%                                                                           
+unter on  main [!] via go v1.19.2 
+$ pgcli -p 5432 -U postgres -h localhost
+Server: PostgreSQL 15.0
+Version: 3.5.0
+Home: http://pgcli.com
+postgres@localhost:postgres> SELECT * FROM rides;
++--------------------------------------+--------+---------+----------------------------+----------------------------+----------+
+| id                                   | driver | kind    | start_time                 | end_time                   | distance |
+|--------------------------------------+--------+---------+----------------------------+----------------------------+----------|
+| 8d4a415a-bac1-4bf3-ac63-6867033a6ef4 | bond   | private | 2022-10-25 18:05:51.492444 | 2022-10-25 18:50:00.667721 | 9.2      |
++--------------------------------------+--------+---------+----------------------------+----------------------------+----------+
+SELECT 1
+Time: 0.006s
+postgres@localhost:postgres> \q
+Goodbye!
+
+unter on  main [!] via go v1.19.2 took 10s 
+$./_class/run-cache.sh 
+d637e8e395129c16e99e8e817439aa4a375a4a0f281c1d0578fcce6b56c78758
+
+unter on  main via go v1.19.2 
+$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+d637e8e39512   redis:7-alpine       "docker-entrypoint.s…"   2 seconds ago   Up 2 seconds   0.0.0.0:6379->6379/tcp, :::6379->6379/tcp   distracted_poitras
+84ebdd917b90   postgres:15-alpine   "docker-entrypoint.s…"   2 hours ago     Up 2 hours     0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   eager_poitras
+
+unter on  main via go v1.19.2 
+$ go mod tidy
+go: finding module for package github.com/go-redis/redis/v8
+go: found github.com/go-redis/redis/v8 in github.com/go-redis/redis/v8 v8.11.5
+
+
+unter on  main [!?] via go v1.19.2 
+❮ curl http://localhost:8080/rides/8d4a415a-bac1-4bf3-ac63-6867033a6ef4                          
+{"id":"8d4a415a-bac1-4bf3-ac63-6867033a6ef4","driver":"bond","kind":"private","start":"2022-10-25T18:05:51.492444Z","end":"2022-10-25T18:50:00.667721Z","distance":9.2}%                                                                                                        
+unter on  main [!?] via go v1.19.2 
+❮ curl http://localhost:8080/rides/8d4a415a-bac1-4bf3-ac63-6867033a6ef4
+{"id":"8d4a415a-bac1-4bf3-ac63-6867033a6ef4","driver":"bond","kind":"private","start":"2022-10-25T18:05:51.492444Z","end":"2022-10-25T18:50:00.667721Z","distance":9.2}%                                                                                                        
+unter on  main [!?] via go v1.19.2 
+❮ 
+
+unter on  main [!?] via go v1.19.2 
+$git add .
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m cache
+[main 09ef777] cache
+ 5 files changed, 103 insertions(+), 6 deletions(-)
+ create mode 100644 cache/cache.go
+
+unter on  main [⇡] via go v1.19.2 
+$ gi tpush
+zsh: command not found: gi
+
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 17, done.
+Counting objects: 100% (17/17), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (10/10), 2.98 KiB | 2.98 MiB/s, done.
+Total 10 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 2 local objects.
+To github.com:353solutions/srv-2210.git
+   fbff271..09ef777  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ git commit -m cache
+
+unter on  main [!] via go v1.19.2 
+$ curl http://localhost:8080/health
+{"cache":"ok","db":"ok"}%                                                                                                               
+unter on  main [!] via go v1.19.2 
+$docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+d637e8e39512   redis:7-alpine       "docker-entrypoint.s…"   26 minutes ago   Up 26 minutes   0.0.0.0:6379->6379/tcp, :::6379->6379/tcp   distracted_poitras
+84ebdd917b90   postgres:15-alpine   "docker-entrypoint.s…"   2 hours ago      Up 2 hours      0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   eager_poitras
+
+unter on  main [!] via go v1.19.2 
+$ docker rm -f  d637e8e39512
+d637e8e39512
+
+unter on  main [!] via go v1.19.2 
+$ curl http://localhost:8080/health
+{"cache":"dial tcp [::1]:6379: connect: connection refused","db":"ok"}%                                                                 
+unter on  main [!] via go v1.19.2 
+$ ./_class/run-cache.sh 
+4a269e013260e9fa9f64c70e87d2b00071e90c8bffec8251694aaa31558cfee8
+
+unter on  main [!] via go v1.19.2 
+❮ curl http://localhost:8080/health
+{"cache":null,"db":null}%                                                                                                               
+unter on  main [!] via go v1.19.2 
+$ curl -i http://localhost:8080/health
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Tue, 25 Oct 2022 19:55:28 GMT
+Content-Length: 24
+
+{"cache":null,"db":null}%                                                                                                              
+unter on  main [!] via go v1.19.2 
+❮ curl -i http://localhost:8080/health
+
+unter on  main [!] via go v1.19.2 
+$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+4a269e013260   redis:7-alpine       "docker-entrypoint.s…"   16 seconds ago   Up 15 seconds   0.0.0.0:6379->6379/tcp, :::6379->6379/tcp   dreamy_jemison
+84ebdd917b90   postgres:15-alpine   "docker-entrypoint.s…"   2 hours ago      Up 2 hours      0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   eager_poitras
+
+unter on  main [!] via go v1.19.2 
+$ docker rm -f 4a269e013260
+4a269e013260
+
+unter on  main [!] via go v1.19.2 
+❮ curl -i http://localhost:8080/health
+HTTP/1.1 500 Internal Server Error
+Date: Tue, 25 Oct 2022 19:55:41 GMT
+Content-Length: 70
+Content-Type: text/plain; charset=utf-8
+
+{"cache":"dial tcp [::1]:6379: connect: connection refused","db":null}%                                                                 
+unter on  main [!] via go v1.19.2 
+$ ./_class/run-cache.sh 
+396d794ba3e6b8a8f0bec4a633235fb17421d7dd43962a428694b90daf9ff491
+
+unter on  main [!?] via go v1.19.2 
+❮ curl -i http://localhost:8080/health
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Tue, 25 Oct 2022 20:35:00 GMT
+Content-Length: 24
+
+{"cache":null,"db":null}%                                                                                                              
+unter on  main [!?] via go v1.19.2 
+$ curl -i http://localhost:8080/health
+
+unter on  main [!?] via go v1.19.2 
+❮ curl http://localhost:8080/rides/8d4a415a-bac1-4bf3-ac63-6867033a6ef4
+{"id":"8d4a415a-bac1-4bf3-ac63-6867033a6ef4","driver":"bond","kind":"private","start":"2022-10-25T18:05:51.492444Z","end":"2022-10-25T18:50:00.667721Z","distance":9.2}%                                                                                                        
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/rides/8d4a415a-bac1-4bf3-ac63-6867033a6ef4
+{"id":"8d4a415a-bac1-4bf3-ac63-6867033a6ef4","driver":"bond","kind":"private","start":"2022-10-25T18:05:51.492444Z","end":"2022-10-25T18:50:00.667721Z","distance":9.2}%                                                                                                        
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/debug/vars
+{
+"cmdline": ["/home/miki/teaching/practical-go-services/unter/cmd/httpd/__debug_bin"],
+"memstats": {"Alloc":532408,"TotalAlloc":532408,"Sys":13220880,"Lookups":0,"Mallocs":2114,"Frees":156,"HeapAlloc":532408,"HeapSys":3670016,"HeapIdle":2129920,"HeapInuse":1540096,"HeapReleased":2097152,"HeapObjects":1958,"StackInuse":524288,"StackSys":524288,"MSpanInuse":46648,"MSpanSys":48960,"MCacheInuse":14400,"MCacheSys":15600,"BuckHashSys":3978,"GCSys":8104936,"OtherSys":853102,"NextGC":4194304,"LastGC":0,"PauseTotalNs":0,"PauseNs":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"PauseEnd":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"NumGC":0,"NumForcedGC":0,"GCCPUFraction":0,"EnableGC":true,"DebugGC":false,"BySize":[{"Size":0,"Mallocs":0,"Frees":0},{"Size":8,"Mallocs":41,"Frees":0},{"Size":16,"Mallocs":687,"Frees":0},{"Size":24,"Mallocs":124,"Frees":0},{"Size":32,"Mallocs":255,"Frees":0},{"Size":48,"Mallocs":223,"Frees":0},{"Size":64,"Mallocs":101,"Frees":0},{"Size":80,"Mallocs":52,"Frees":0},{"Size":96,"Mallocs":77,"Frees":0},{"Size":112,"Mallocs":67,"Frees":0},{"Size":128,"Mallocs":29,"Frees":0},{"Size":144,"Mallocs":9,"Frees":0},{"Size":160,"Mallocs":44,"Frees":0},{"Size":176,"Mallocs":13,"Frees":0},{"Size":192,"Mallocs":2,"Frees":0},{"Size":208,"Mallocs":31,"Frees":0},{"Size":224,"Mallocs":4,"Frees":0},{"Size":240,"Mallocs":3,"Frees":0},{"Size":256,"Mallocs":17,"Frees":0},{"Size":288,"Mallocs":9,"Frees":0},{"Size":320,"Mallocs":11,"Frees":0},{"Size":352,"Mallocs":13,"Frees":0},{"Size":384,"Mallocs":5,"Frees":0},{"Size":416,"Mallocs":41,"Frees":0},{"Size":448,"Mallocs":0,"Frees":0},{"Size":480,"Mallocs":1,"Frees":0},{"Size":512,"Mallocs":1,"Frees":0},{"Size":576,"Mallocs":3,"Frees":0},{"Size":640,"Mallocs":10,"Frees":0},{"Size":704,"Mallocs":6,"Frees":0},{"Size":768,"Mallocs":1,"Frees":0},{"Size":896,"Mallocs":2,"Frees":0},{"Size":1024,"Mallocs":14,"Frees":0},{"Size":1152,"Mallocs":3,"Frees":0},{"Size":1280,"Mallocs":6,"Frees":0},{"Size":1408,"Mallocs":1,"Frees":0},{"Size":1536,"Mallocs":12,"Frees":0},{"Size":1792,"Mallocs":5,"Frees":0},{"Size":2048,"Mallocs":1,"Frees":0},{"Size":2304,"Mallocs":2,"Frees":0},{"Size":2688,"Mallocs":4,"Frees":0},{"Size":3072,"Mallocs":0,"Frees":0},{"Size":3200,"Mallocs":1,"Frees":0},{"Size":3456,"Mallocs":0,"Frees":0},{"Size":4096,"Mallocs":6,"Frees":0},{"Size":4864,"Mallocs":0,"Frees":0},{"Size":5376,"Mallocs":2,"Frees":0},{"Size":6144,"Mallocs":2,"Frees":0},{"Size":6528,"Mallocs":1,"Frees":0},{"Size":6784,"Mallocs":0,"Frees":0},{"Size":6912,"Mallocs":0,"Frees":0},{"Size":8192,"Mallocs":1,"Frees":0},{"Size":9472,"Mallocs":12,"Frees":0},{"Size":9728,"Mallocs":0,"Frees":0},{"Size":10240,"Mallocs":0,"Frees":0},{"Size":10880,"Mallocs":0,"Frees":0},{"Size":12288,"Mallocs":0,"Frees":0},{"Size":13568,"Mallocs":0,"Frees":0},{"Size":14336,"Mallocs":0,"Frees":0},{"Size":16384,"Mallocs":0,"Frees":0},{"Size":18432,"Mallocs":0,"Frees":0}]}
+}
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/debug/vars
+{
+"cmdline": ["/home/miki/teaching/practical-go-services/unter/cmd/httpd/__debug_bin"],
+"get.calls": 0,
+"memstats": {"Alloc":529992,"TotalAlloc":529992,"Sys":12958736,"Lookups":0,"Mallocs":2113,"Frees":158,"HeapAlloc":529992,"HeapSys":3735552,"HeapIdle":2310144,"HeapInuse":1425408,"HeapReleased":2277376,"HeapObjects":1955,"StackInuse":458752,"StackSys":458752,"MSpanInuse":37944,"MSpanSys":48960,"MCacheInuse":14400,"MCacheSys":15600,"BuckHashSys":3978,"GCSys":8104936,"OtherSys":590958,"NextGC":4194304,"LastGC":0,"PauseTotalNs":0,"PauseNs":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"PauseEnd":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"NumGC":0,"NumForcedGC":0,"GCCPUFraction":0,"EnableGC":true,"DebugGC":false,"BySize":[{"Size":0,"Mallocs":0,"Frees":0},{"Size":8,"Mallocs":42,"Frees":0},{"Size":16,"Mallocs":687,"Frees":0},{"Size":24,"Mallocs":125,"Frees":0},{"Size":32,"Mallocs":254,"Frees":0},{"Size":48,"Mallocs":223,"Frees":0},{"Size":64,"Mallocs":102,"Frees":0},{"Size":80,"Mallocs":52,"Frees":0},{"Size":96,"Mallocs":79,"Frees":0},{"Size":112,"Mallocs":67,"Frees":0},{"Size":128,"Mallocs":29,"Frees":0},{"Size":144,"Mallocs":9,"Frees":0},{"Size":160,"Mallocs":43,"Frees":0},{"Size":176,"Mallocs":11,"Frees":0},{"Size":192,"Mallocs":2,"Frees":0},{"Size":208,"Mallocs":30,"Frees":0},{"Size":224,"Mallocs":4,"Frees":0},{"Size":240,"Mallocs":3,"Frees":0},{"Size":256,"Mallocs":16,"Frees":0},{"Size":288,"Mallocs":11,"Frees":0},{"Size":320,"Mallocs":11,"Frees":0},{"Size":352,"Mallocs":13,"Frees":0},{"Size":384,"Mallocs":5,"Frees":0},{"Size":416,"Mallocs":38,"Frees":0},{"Size":448,"Mallocs":0,"Frees":0},{"Size":480,"Mallocs":1,"Frees":0},{"Size":512,"Mallocs":1,"Frees":0},{"Size":576,"Mallocs":3,"Frees":0},{"Size":640,"Mallocs":10,"Frees":0},{"Size":704,"Mallocs":6,"Frees":0},{"Size":768,"Mallocs":1,"Frees":0},{"Size":896,"Mallocs":2,"Frees":0},{"Size":1024,"Mallocs":13,"Frees":0},{"Size":1152,"Mallocs":3,"Frees":0},{"Size":1280,"Mallocs":6,"Frees":0},{"Size":1408,"Mallocs":1,"Frees":0},{"Size":1536,"Mallocs":12,"Frees":0},{"Size":1792,"Mallocs":5,"Frees":0},{"Size":2048,"Mallocs":1,"Frees":0},{"Size":2304,"Mallocs":2,"Frees":0},{"Size":2688,"Mallocs":4,"Frees":0},{"Size":3072,"Mallocs":0,"Frees":0},{"Size":3200,"Mallocs":1,"Frees":0},{"Size":3456,"Mallocs":0,"Frees":0},{"Size":4096,"Mallocs":6,"Frees":0},{"Size":4864,"Mallocs":0,"Frees":0},{"Size":5376,"Mallocs":2,"Frees":0},{"Size":6144,"Mallocs":2,"Frees":0},{"Size":6528,"Mallocs":1,"Frees":0},{"Size":6784,"Mallocs":0,"Frees":0},{"Size":6912,"Mallocs":0,"Frees":0},{"Size":8192,"Mallocs":1,"Frees":0},{"Size":9472,"Mallocs":12,"Frees":0},{"Size":9728,"Mallocs":0,"Frees":0},{"Size":10240,"Mallocs":0,"Frees":0},{"Size":10880,"Mallocs":0,"Frees":0},{"Size":12288,"Mallocs":0,"Frees":0},{"Size":13568,"Mallocs":0,"Frees":0},{"Size":14336,"Mallocs":0,"Frees":0},{"Size":16384,"Mallocs":0,"Frees":0},{"Size":18432,"Mallocs":0,"Frees":0}]}
+}
+unter on  main [!?] via go v1.19.2 
+❮ curl http://localhost:8080/rides/8d4a415a-bac1-4bf3-ac63-6867033a6ef4
+{"id":"8d4a415a-bac1-4bf3-ac63-6867033a6ef4","driver":"bond","kind":"private","start":"2022-10-25T18:05:51.492444Z","end":"2022-10-25T18:50:00.667721Z","distance":9.2}%                                                                                                        
+unter on  main [!?] via go v1.19.2 
+❮ curl http://localhost:8080/debug/vars                                
+{
+"cmdline": ["/home/miki/teaching/practical-go-services/unter/cmd/httpd/__debug_bin"],
+"get.calls": 1,
+"memstats": {"Alloc":611496,"TotalAlloc":611496,"Sys":13220880,"Lookups":0,"Mallocs":2784,"Frees":259,"HeapAlloc":611496,"HeapSys":3702784,"HeapIdle":2129920,"HeapInuse":1572864,"HeapReleased":2072576,"HeapObjects":2525,"StackInuse":491520,"StackSys":491520,"MSpanInuse":37944,"MSpanSys":48960,"MCacheInuse":14400,"MCacheSys":15600,"BuckHashSys":3978,"GCSys":8135776,"OtherSys":822262,"NextGC":4194304,"LastGC":0,"PauseTotalNs":0,"PauseNs":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"PauseEnd":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"NumGC":0,"NumForcedGC":0,"GCCPUFraction":0,"EnableGC":true,"DebugGC":false,"BySize":[{"Size":0,"Mallocs":0,"Frees":0},{"Size":8,"Mallocs":75,"Frees":0},{"Size":16,"Mallocs":953,"Frees":0},{"Size":24,"Mallocs":160,"Frees":0},{"Size":32,"Mallocs":268,"Frees":0},{"Size":48,"Mallocs":290,"Frees":0},{"Size":64,"Mallocs":132,"Frees":0},{"Size":80,"Mallocs":58,"Frees":0},{"Size":96,"Mallocs":95,"Frees":0},{"Size":112,"Mallocs":73,"Frees":0},{"Size":128,"Mallocs":40,"Frees":0},{"Size":144,"Mallocs":23,"Frees":0},{"Size":160,"Mallocs":47,"Frees":0},{"Size":176,"Mallocs":13,"Frees":0},{"Size":192,"Mallocs":2,"Frees":0},{"Size":208,"Mallocs":40,"Frees":0},{"Size":224,"Mallocs":6,"Frees":0},{"Size":240,"Mallocs":3,"Frees":0},{"Size":256,"Mallocs":31,"Frees":0},{"Size":288,"Mallocs":15,"Frees":0},{"Size":320,"Mallocs":11,"Frees":0},{"Size":352,"Mallocs":20,"Frees":0},{"Size":384,"Mallocs":5,"Frees":0},{"Size":416,"Mallocs":43,"Frees":0},{"Size":448,"Mallocs":0,"Frees":0},{"Size":480,"Mallocs":1,"Frees":0},{"Size":512,"Mallocs":3,"Frees":0},{"Size":576,"Mallocs":6,"Frees":0},{"Size":640,"Mallocs":10,"Frees":0},{"Size":704,"Mallocs":6,"Frees":0},{"Size":768,"Mallocs":1,"Frees":0},{"Size":896,"Mallocs":2,"Frees":0},{"Size":1024,"Mallocs":15,"Frees":0},{"Size":1152,"Mallocs":5,"Frees":0},{"Size":1280,"Mallocs":6,"Frees":0},{"Size":1408,"Mallocs":1,"Frees":0},{"Size":1536,"Mallocs":15,"Frees":0},{"Size":1792,"Mallocs":6,"Frees":0},{"Size":2048,"Mallocs":3,"Frees":0},{"Size":2304,"Mallocs":3,"Frees":0},{"Size":2688,"Mallocs":4,"Frees":0},{"Size":3072,"Mallocs":0,"Frees":0},{"Size":3200,"Mallocs":1,"Frees":0},{"Size":3456,"Mallocs":0,"Frees":0},{"Size":4096,"Mallocs":11,"Frees":0},{"Size":4864,"Mallocs":1,"Frees":0},{"Size":5376,"Mallocs":2,"Frees":0},{"Size":6144,"Mallocs":3,"Frees":0},{"Size":6528,"Mallocs":1,"Frees":0},{"Size":6784,"Mallocs":0,"Frees":0},{"Size":6912,"Mallocs":0,"Frees":0},{"Size":8192,"Mallocs":1,"Frees":0},{"Size":9472,"Mallocs":12,"Frees":0},{"Size":9728,"Mallocs":0,"Frees":0},{"Size":10240,"Mallocs":0,"Frees":0},{"Size":10880,"Mallocs":0,"Frees":0},{"Size":12288,"Mallocs":0,"Frees":0},{"Size":13568,"Mallocs":0,"Frees":0},{"Size":14336,"Mallocs":0,"Frees":0},{"Size":16384,"Mallocs":0,"Frees":0},{"Size":18432,"Mallocs":0,"Frees":0}]}
+}
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/debug/vars
+{
+"cmdline": ["/home/miki/teaching/practical-go-services/unter/cmd/httpd/__debug_bin"],
+"get.calls": 0,
+"host": "sterling",
+"memstats": {"Alloc":530608,"TotalAlloc":530608,"Sys":13220880,"Lookups":0,"Mallocs":2128,"Frees":158,"HeapAlloc":530608,"HeapSys":3735552,"HeapIdle":2441216,"HeapInuse":1294336,"HeapReleased":2441216,"HeapObjects":1970,"StackInuse":458752,"StackSys":458752,"MSpanInuse":29240,"MSpanSys":32640,"MCacheInuse":14400,"MCacheSys":15600,"BuckHashSys":3978,"GCSys":8117272,"OtherSys":857086,"NextGC":4194304,"LastGC":0,"PauseTotalNs":0,"PauseNs":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"PauseEnd":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"NumGC":0,"NumForcedGC":0,"GCCPUFraction":0,"EnableGC":true,"DebugGC":false,"BySize":[{"Size":0,"Mallocs":0,"Frees":0},{"Size":8,"Mallocs":43,"Frees":0},{"Size":16,"Mallocs":698,"Frees":0},{"Size":24,"Mallocs":127,"Frees":0},{"Size":32,"Mallocs":254,"Frees":0},{"Size":48,"Mallocs":223,"Frees":0},{"Size":64,"Mallocs":102,"Frees":0},{"Size":80,"Mallocs":52,"Frees":0},{"Size":96,"Mallocs":76,"Frees":0},{"Size":112,"Mallocs":67,"Frees":0},{"Size":128,"Mallocs":30,"Frees":0},{"Size":144,"Mallocs":9,"Frees":0},{"Size":160,"Mallocs":44,"Frees":0},{"Size":176,"Mallocs":13,"Frees":0},{"Size":192,"Mallocs":2,"Frees":0},{"Size":208,"Mallocs":30,"Frees":0},{"Size":224,"Mallocs":4,"Frees":0},{"Size":240,"Mallocs":3,"Frees":0},{"Size":256,"Mallocs":16,"Frees":0},{"Size":288,"Mallocs":12,"Frees":0},{"Size":320,"Mallocs":11,"Frees":0},{"Size":352,"Mallocs":12,"Frees":0},{"Size":384,"Mallocs":5,"Frees":0},{"Size":416,"Mallocs":37,"Frees":0},{"Size":448,"Mallocs":0,"Frees":0},{"Size":480,"Mallocs":1,"Frees":0},{"Size":512,"Mallocs":2,"Frees":0},{"Size":576,"Mallocs":3,"Frees":0},{"Size":640,"Mallocs":10,"Frees":0},{"Size":704,"Mallocs":6,"Frees":0},{"Size":768,"Mallocs":1,"Frees":0},{"Size":896,"Mallocs":2,"Frees":0},{"Size":1024,"Mallocs":13,"Frees":0},{"Size":1152,"Mallocs":3,"Frees":0},{"Size":1280,"Mallocs":6,"Frees":0},{"Size":1408,"Mallocs":1,"Frees":0},{"Size":1536,"Mallocs":12,"Frees":0},{"Size":1792,"Mallocs":5,"Frees":0},{"Size":2048,"Mallocs":1,"Frees":0},{"Size":2304,"Mallocs":2,"Frees":0},{"Size":2688,"Mallocs":4,"Frees":0},{"Size":3072,"Mallocs":0,"Frees":0},{"Size":3200,"Mallocs":1,"Frees":0},{"Size":3456,"Mallocs":0,"Frees":0},{"Size":4096,"Mallocs":6,"Frees":0},{"Size":4864,"Mallocs":0,"Frees":0},{"Size":5376,"Mallocs":2,"Frees":0},{"Size":6144,"Mallocs":2,"Frees":0},{"Size":6528,"Mallocs":1,"Frees":0},{"Size":6784,"Mallocs":0,"Frees":0},{"Size":6912,"Mallocs":0,"Frees":0},{"Size":8192,"Mallocs":1,"Frees":0},{"Size":9472,"Mallocs":12,"Frees":0},{"Size":9728,"Mallocs":0,"Frees":0},{"Size":10240,"Mallocs":0,"Frees":0},{"Size":10880,"Mallocs":0,"Frees":0},{"Size":12288,"Mallocs":0,"Frees":0},{"Size":13568,"Mallocs":0,"Frees":0},{"Size":14336,"Mallocs":0,"Frees":0},{"Size":16384,"Mallocs":0,"Frees":0},{"Size":18432,"Mallocs":0,"Frees":0}]},
+"version": "1.2.3"
+}
+unter on  main [!?] via go v1.19.2 
+$ 
+
+unter on  main [!?] via go v1.19.2 
+$ git st
+## main...origin/main
+ M _class/day-2.log
+ M cmd/httpd/config.go
+ M cmd/httpd/main.go
+
+unter on  main [!?] via go v1.19.2 
 $
