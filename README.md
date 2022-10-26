@@ -11,6 +11,44 @@ Miki Tebeka
 - [Go Brain Teasers](https://pragprog.com/titles/d-gobrain/go-brain-teasers/) book
 
 ---
+
+## Day 3
+
+### Agenda
+
+- Testing overview
+- Testing handlers
+- Running services in testing
+- Mocking
+- Performance optimization
+
+
+[Terminal Log](_class/day-3.log)
+
+### Links
+
+- Testing
+    - [testing](https://pkg.go.dev/testing/)
+    - [testify](https://pkg.go.dev/github.com/stretchr/testify) - Many test utilities (including suites & mocking)
+    - [Tutorial: Getting started with fuzzing](https://go.dev/doc/tutorial/fuzz)
+        - [testing/quick](https://pkg.go.dev/testing/quick) - Initial fuzzing library
+    - [test containers](https://golang.testcontainers.org/)
+    - [net/http/httptest](https://pkg.go.dev/net/http/httptest)
+- Performance Optimization
+    - Miki's [Optimization](optimize.html) guidelines
+    - [Amdahl's Law](https://en.wikipedia.org/wiki/Amdahl%27s_law) - Limits of concurrency
+    - [Computer Latency at Human Scale](https://twitter.com/jordancurve/status/1108475342468120576/photo/1)
+    - [Rules of Optimization Club](https://wiki.c2.com/?RulesOfOptimizationClub)
+    - [Profiling Go Programs](https://blog.golang.org/2011/06/profiling-go-programs.html)
+    - [hey](https://github.com/rakyll/hey)
+        - `go install github.com/rakyll/hey@latest`
+        - `export PATH=$(go env GOPATH)/bin:${PATH}`
+
+### Data & Other
+
+- `go get github.com/rakyll/hey@latest`
+
+---
 ## Day 2
 
 ### Agenda
