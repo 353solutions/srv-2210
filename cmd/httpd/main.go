@@ -319,6 +319,18 @@ func addLogging(log *log.Logger, h http.Handler) http.Handler {
 
 var version = "1.2.3"
 
+func buildRouter(s *Server) *http.ServeMux {
+	r := mux.NewRouter()
+	r.HandleFunc("/health", s.healthHandler).Methods("GET")
+	r.HandleFunc("/rides", s.startHandler).Methods("POST")
+	r.HandleFunc("/rides/{id}", s.getHandler).Methods("GET")
+	r.HandleFunc("/rides/{id}/end", s.endHandler).Methods("POST")
+
+	mux := http.NewServeMux()
+	mux.Handle("/", addLogging(s.log, r))
+	return mux
+}
+
 func main() {
 	cfg, err := loadConfig()
 	if err != nil {
@@ -342,7 +354,6 @@ func main() {
 	}
 
 	logger.Printf("INFO: config=%#v", cfg)
-	r := mux.NewRouter()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -368,15 +379,11 @@ func main() {
 	// routing
 	// - if route ends with / it's a prefix match
 	// - otherwise exact match
-	r.HandleFunc("/health", s.healthHandler).Methods("GET")
-	r.HandleFunc("/rides", s.startHandler).Methods("POST")
-	r.HandleFunc("/rides/{id}", s.getHandler).Methods("GET")
-	r.HandleFunc("/rides/{id}/end", s.endHandler).Methods("POST")
-	http.Handle("/", addLogging(logger, r))
+	mux := buildRouter(&s)
 
 	srv := http.Server{
 		Addr:    cfg.Addr,
-		Handler: http.DefaultServeMux,
+		Handler: mux,
 	}
 
 	logger.Printf("INFO: server starting on %s", cfg.Addr)
