@@ -2,6 +2,12 @@ package unter
 
 import "time"
 
+const (
+	minFee  = 250 // ¢
+	perMile = 250
+	perHour = 3000
+)
+
 type Report struct {
 	Driver   string
 	NumRides int
