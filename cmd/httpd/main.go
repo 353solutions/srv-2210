@@ -140,6 +140,7 @@ func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	*/
 
+	//	w.WriteHeader(http.StatusCreated)
 	if err := sendJSON(w, resp); err != nil {
 		http.Error(w, "can't marshal to JSON", http.StatusInternalServerError)
 		return
