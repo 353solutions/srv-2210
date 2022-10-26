@@ -325,4 +325,198 @@ In the second example, the argument math is passed through to the test
 binary, instead of being interpreted as the package list.
 
 unter on  main [!?] via go v1.19.2 
-$
+$go test -cover -v ./...
+=== RUN   TestRideFee
+=== RUN   TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750}
+=== RUN   TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675}
+--- PASS: TestRideFee (0.00s)
+    --- PASS: TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750} (0.00s)
+    --- PASS: TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675} (0.00s)
+PASS
+coverage: 23.8% of statements
+ok  	github.com/353solutions/unter	0.003s	coverage: 23.8% of statements
+?   	github.com/353solutions/unter/cache	[no test files]
+?   	github.com/353solutions/unter/cmd/httpd	[no test files]
+?   	github.com/353solutions/unter/db	[no test files]
+?   	github.com/353solutions/unter/logger	[no test files]
+
+unter on  main [!?] via go v1.19.2 
+$ staticcheck ./...
+
+unter on  main [!?] via go v1.19.2 
+$ make test
+staticcheck ./...
+go test -v ./...
+=== RUN   TestRideFee
+=== RUN   TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750}
+=== RUN   TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675}
+--- PASS: TestRideFee (0.00s)
+    --- PASS: TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750} (0.00s)
+    --- PASS: TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675} (0.00s)
+PASS
+ok  	github.com/353solutions/unter	(cached)
+?   	github.com/353solutions/unter/cache	[no test files]?   	github.com/353solutions/unter/cmd/httpd	[no test files]
+?   	github.com/353solutions/unter/db	[no test files]
+?   	github.com/353solutions/unter/logger	[no test files]
+
+unter on  main [!?] via go v1.19.2 
+$ make install-tools 
+go install honnef.co/go/tools/cmd/staticcheck@latest
+
+unter on  main [!?] via go v1.19.2 took 2s 
+$ make test
+staticcheck ./...
+go test -v ./...
+=== RUN   TestRideFee
+=== RUN   TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750}
+=== RUN   TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675}
+--- PASS: TestRideFee (0.00s)
+    --- PASS: TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750} (0.00s)
+    --- PASS: TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675} (0.00s)
+PASS
+ok  	github.com/353solutions/unter	(cached)
+?   	github.com/353solutions/unter/cache	[no test files]
+?   	github.com/353solutions/unter/cmd/httpd	[no test files]
+?   	github.com/353solutions/unter/db	[no test files]
+?   	github.com/353solutions/unter/logger	[no test files]
+
+unter on  main [!?] via go v1.19.2 
+❮ make test
+staticcheck ./...unter.go:31:5: var r is unused (U1000)
+unter.go:31:28: error parsing regexp: missing closing ]: `[a-` (SA1000)
+make: *** [Makefile:5: test] Error 1
+
+unter on  main [!?] via go v1.19.2 
+$ go run ./cmd/httpd 
+panic: regexp: Compile(`[a-`): error parsing regexp: missing closing ]: `[a-`
+
+goroutine 1 [running]:
+regexp.MustCompile({0x74c43a, 0x3})
+	/home/miki/sdk/go1.19.2/src/regexp/regexp.go:319 +0xbb
+github.com/353solutions/unter.init()
+	/home/miki/teaching/practical-go-services/unter/unter.go:31 +0x25
+exit status 2
+
+unter on  main [!?] via go v1.19.2 
+$ ./_class/run-db.sh 
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+
+unter on  main [!?] via go v1.19.2 
+$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+68f510fecf9a   postgres:15-alpine   "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   hopeful_meitner
+
+unter on  main [!?] via go v1.19.2 
+$ ./_class/run-cache.sh 
+c298be5b0c4077354feffac0e984ca3d54b96a1e89c17a3a4011a5f3ae63119b
+
+unter on  main [!?] via go v1.19.2 
+$docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED          STATUS         PORTS                                       NAMES
+c298be5b0c40   redis:7-alpine       "docker-entrypoint.s…"   3 seconds ago    Up 2 seconds   0.0.0.0:6379->6379/tcp, :::6379->6379/tcp   busy_goldstine
+68f510fecf9a   postgres:15-alpine   "docker-entrypoint.s…"   11 seconds ago   Up 9 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   hopeful_meitner
+
+unter on  main [!?] via go v1.19.2 
+$ git add -u
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m 'testing with router'
+[main cb7252d] testing with router
+ 2 files changed, 18 insertions(+), 7 deletions(-)
+
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (7/7), 718 bytes | 718.00 KiB/s, done.
+Total 7 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To github.com:353solutions/srv-2210.git
+   f0659a1..cb7252d  main -> main
+
+unter on  main via go v1.19.2 took 7s 
+$ git status -u
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+unter on  main via go v1.19.2 
+$ git add cmd/main_test.go
+fatal: pathspec 'cmd/main_test.go' did not match any files
+
+unter on  main [!] via go v1.19.2 
+$ git add cmd/httpd/main_test.go
+The following paths are ignored by one of your .gitignore files:
+cmd/httpd
+hint: Use -f if you really want to add them.
+hint: Turn this message off by running
+hint: "git config advice.addIgnoredFile false"
+
+unter on  main [!] via go v1.19.2 
+$ git add -f cmd/httpd/main_test.go
+
+unter on  main [!+] via go v1.19.2 
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   cmd/httpd/main_test.go
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   cmd/httpd/main.go
+
+
+unter on  main [!+] via go v1.19.2 
+$git ci -m 'main
+
+unter on  main [!+] via go v1.19.2 
+$ git add -u
+
+unter on  main [+] via go v1.19.2 
+$ git st
+## main...origin/main
+M  cmd/httpd/main.go
+A  cmd/httpd/main_test.go
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m 'main test'
+[main bc18a62] main test
+ 2 files changed, 70 insertions(+)
+ create mode 100644 cmd/httpd/main_test.go
+
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 10, done.
+Counting objects: 100% (10/10), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (6/6), 1.08 KiB | 1.08 MiB/s, done.
+Total 6 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:353solutions/srv-2210.git
+   cb7252d..bc18a62  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ git commit -m 'bad rule' .gitignore 
+[main fcabb90] bad rule
+ 1 file changed, 1 deletion(-)

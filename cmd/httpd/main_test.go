@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"log"
@@ -65,5 +66,34 @@ func Test_healthHandler(t *testing.T) {
 
 // exercise:
 func Test_startHandler(t *testing.T) {
+	require := require.New(t)
+	s := setupServer(t)
 
+	w := httptest.NewRecorder()
+	// buf := strings.NewReader(`{"driver": "q", "kind": "start"}`)
+	msg := map[string]any{
+		"driver": "q",
+		"kind":   "shared",
+	}
+	var buf bytes.Buffer
+	err := json.NewEncoder(&buf).Encode(msg)
+	require.NoError(err, "json encode")
+	r := httptest.NewRequest(http.MethodPost, "/rides", &buf)
+	// r.Header.Set()
+	// r.BasicAuth("bond", "007")
+
+	// Bypass routing, might be OK in some cases
+	s.startHandler(w, r)
+
+	resp := w.Result()
+	require.Equal(http.StatusOK, resp.StatusCode)
+
+	var reply struct {
+		ID     string
+		Action string
+	}
+	err = json.NewDecoder(resp.Body).Decode(&reply)
+	require.NoError(err, "decode json")
+	require.NotEmpty(reply.ID, "id")
+	require.Equal("start", reply.Action, "action")
 }
