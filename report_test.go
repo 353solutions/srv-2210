@@ -29,6 +29,9 @@ var feeCases = []struct {
 	{3 * time.Minute, 3, true, 675},
 }
 
+// Homework: Run a fuzz test on RideFee
+// https://go.dev/doc/tutorial/fuzz#fuzz_test
+
 func TestRideFee(t *testing.T) {
 	for _, tc := range feeCases {
 		name := fmt.Sprintf("%+v", tc)

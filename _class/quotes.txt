@@ -1,3 +1,9 @@
+Don't design with interfaces, discover them.
+    - Rob Pike
+
+I'm a big proponent of testing, I'm not a big proponent of test writing.
+    - Rich Hickey (http://j.mp/2B8NGcC)
+
 There are only two hard problems in Computer Science: cache invalidation and naming things.
     - Phil Karlton
 
