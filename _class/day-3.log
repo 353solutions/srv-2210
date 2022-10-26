@@ -859,3 +859,381 @@ In the first example, the -x and the second -v are passed through to the
 test binary unchanged and with no effect on the go command itself.
 In the second example, the argument math is passed through to the test
 binary, instead of being interpreted as the package list.
+unter on  main [!] via go v1.19.2 
+$ go test -v ./client 
+=== RUN   TestHealth
+2022/10/26 22:33:13 trip!
+--- PASS: TestHealth (0.00s)
+PASS
+ok  	github.com/353solutions/unter/client	0.003s
+
+unter on  main [!?] via go v1.19.2 
+$ go test -v ./...
+=== RUN   TestRideFee
+=== RUN   TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750}
+=== RUN   TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675}
+--- PASS: TestRideFee (0.00s)
+    --- PASS: TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750} (0.00s)
+    --- PASS: TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675} (0.00s)
+PASS
+ok  	github.com/353solutions/unter	0.003s
+?   	github.com/353solutions/unter/cache	[no test files]
+=== RUN   TestHealth
+--- PASS: TestHealth (0.00s)
+PASS
+ok  	github.com/353solutions/unter/client	0.003s
+=== RUN   Test_healthHandler
+    main_test.go:51: pattern: /
+2022/10/26 22:37:18 /health called (rid = 087cc397-3a92-4ec1-a903-f6ee42436453)
+2022/10/26 22:37:18 /health ended in 265.474µs (rid = 087cc397-3a92-4ec1-a903-f6ee42436453)
+--- PASS: Test_healthHandler (0.01s)
+=== RUN   Test_startHandler
+--- PASS: Test_startHandler (0.01s)
+PASS
+ok  	github.com/353solutions/unter/cmd/httpd	0.018s
+?   	github.com/353solutions/unter/db	[no test files]
+?   	github.com/353solutions/unter/logger	[no test files]
+unter on  main [!?] via go v1.19.2 
+$ Don't design with interfaces, discover them.
+    - Rob Pike
+git add cli
+
+unter on  main [!?] via go v1.19.2 
+$ git add client
+
+unter on  main [!+] via go v1.19.2 
+$ git status -u
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   client/client.go
+	new file:   client/client_test.go
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   _class/day-3.log
+	modified:   _class/quotes.txt
+	modified:   report_test.go
+
+
+unter on  main [!+] via go v1.19.2 
+$ git add -u
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m 'mocking http call'
+[main 8b0c3cf] mocking http call
+ 5 files changed, 411 insertions(+), 1 deletion(-)
+ create mode 100644 client/client.go
+ create mode 100644 client/client_test.go
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 14, done.
+Counting objects: 100% (14/14), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 2.63 KiB | 2.63 MiB/s, done.
+Total 9 (delta 5), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To github.com:353solutions/srv-2210.git
+   d5587b3..8b0c3cf  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED       STATUS       PORTS                                       NAMES
+c298be5b0c40   redis:7-alpine       "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:6379->6379/tcp, :::6379->6379/tcp   busy_goldstine
+68f510fecf9a   postgres:15-alpine   "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   hopeful_meitner
+
+unter on  main via go v1.19.2 
+$ docker run -d -P redis:7-alpine
+967375e769a9b8164b1b24324ad36050d4e9d532e34315c10b4996c80c1dfe25
+
+unter on  main via go v1.19.2 
+$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+967375e769a9   redis:7-alpine       "docker-entrypoint.s…"   3 seconds ago   Up 2 seconds   0.0.0.0:49153->6379/tcp, :::49153->6379/tcp   crazy_solomon
+c298be5b0c40   redis:7-alpine       "docker-entrypoint.s…"   2 hours ago     Up 2 hours     0.0.0.0:6379->6379/tcp, :::6379->6379/tcp     busy_goldstine
+68f510fecf9a   postgres:15-alpine   "docker-entrypoint.s…"   2 hours ago     Up 2 hours     0.0.0.0:5432->5432/tcp, :::5432->5432/tcp     hopeful_meitner
+unter on  main via go v1.19.2 
+$ docker rm -f 967375e769a9
+967375e769a9
+
+unter on  main via go v1.19.2 
+$ docker help ps
+
+Usage:  docker ps [OPTIONS]
+
+List containers
+
+Options:
+  -a, --all             Show all containers (default shows just running)
+  -f, --filter filter   Filter output based on conditions provided
+      --format string   Pretty-print containers using a Go template
+  -n, --last int        Show n last created containers (includes all states) (default -1)
+  -l, --latest          Show the latest created container (includes all states)
+      --no-trunc        Don't truncate output
+  -q, --quiet           Only display container IDs
+  -s, --size            Display total file sizes
+
+unter on  main [?] via go v1.19.2 
+$ docker ps -f id=68f510fecf9a
+CONTAINER ID   IMAGE                COMMAND                  CREATED       STATUS       PORTS                                       NAMES
+68f510fecf9a   postgres:15-alpine   "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   hopeful_meitner
+
+unter on  main [?] via go v1.19.2 
+$ docker ps -q -f id=68f510fecf9a
+68f510fecf9a
+unter on  main [?] via go v1.19.2 
+❮ docker ps -f id=68f510fecf9a 
+CONTAINER ID   IMAGE                COMMAND                  CREATED       STATUS       PORTS                                       NAMES
+68f510fecf9a   postgres:15-alpine   "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   hopeful_meitner
+
+unter on  main [?] via go v1.19.2 
+$ docker inspect 68f510fecf9a
+[
+    {
+        "Id": "68f510fecf9a4dfbc8ea4193068b53aef88769c6818e6ae115e4f584d887443e",
+        "Created": "2022-10-26T17:44:12.968459164Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "postgres"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 35621,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2022-10-26T17:44:13.348154067Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:cc994726847f9000a5bb5c7896887ecf1d77b524239f00cd3e19675e0cba2b6f",
+        "ResolvConfPath": "/var/lib/docker/containers/68f510fecf9a4dfbc8ea4193068b53aef88769c6818e6ae115e4f584d887443e/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/68f510fecf9a4dfbc8ea4193068b53aef88769c6818e6ae115e4f584d887443e/hostname",
+        "HostsPath": "/var/lib/docker/containers/68f510fecf9a4dfbc8ea4193068b53aef88769c6818e6ae115e4f584d887443e/hosts",
+        "LogPath": "/var/lib/docker/containers/68f510fecf9a4dfbc8ea4193068b53aef88769c6818e6ae115e4f584d887443e/68f510fecf9a4dfbc8ea4193068b53aef88769c6818e6ae115e4f584d887443e-json.log",
+        "Name": "/hopeful_meitner",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {
+                "5432/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "5432"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/46ede47c0265fb6433a039fc549aed9769aee393347197a05cea43ea68c5285f-init/diff:/var/lib/docker/overlay2/23bd5b412a88bfa4e4b0da01e613549c8a9af74770616b2bd9f583ebe68d69b9/diff:/var/lib/docker/overlay2/f91d2674563937edd59c337013c987d8c65268d1941870bb5c170227925292c0/diff:/var/lib/docker/overlay2/3cf27f3c5ec4cdceea1693f5932941a380f9aa573f3347d0fd5d91ee51dd90cd/diff:/var/lib/docker/overlay2/381e931756a326a828f64b23de2cb39cc6a357bdb7096265b49ce6107fc02d4a/diff:/var/lib/docker/overlay2/07543e775ebde6c658217accc3802160363518b43d9db0b0d79bd91dc964575b/diff:/var/lib/docker/overlay2/1f3a29f30f38af40f2b14850a45525f48367c3950a91fefa06af2bf1b9f976de/diff:/var/lib/docker/overlay2/d322e56b11da0e3cb9ee2756e57e2367160d176e01a02fb9eb2d07a8f3cd51c1/diff:/var/lib/docker/overlay2/b6b246c57a8132a00d91b20f882b209ef4fae8361f5170f80792f39832067d61/diff",
+                "MergedDir": "/var/lib/docker/overlay2/46ede47c0265fb6433a039fc549aed9769aee393347197a05cea43ea68c5285f/merged",
+                "UpperDir": "/var/lib/docker/overlay2/46ede47c0265fb6433a039fc549aed9769aee393347197a05cea43ea68c5285f/diff",
+                "WorkDir": "/var/lib/docker/overlay2/46ede47c0265fb6433a039fc549aed9769aee393347197a05cea43ea68c5285f/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "4d4d26ba51187d74abe2245a505d72799cbcde4f4fdac58e99484cbfa5fc3610",
+                "Source": "/var/lib/docker/volumes/4d4d26ba51187d74abe2245a505d72799cbcde4f4fdac58e99484cbfa5fc3610/_data",
+                "Destination": "/var/lib/postgresql/data",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "68f510fecf9a",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "5432/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "POSTGRES_PASSWORD=s3cr3t",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=en_US.utf8",
+                "PG_MAJOR=15",
+                "PG_VERSION=15.0",
+                "PG_SHA256=72ec74f4a7c16e684f43ea42e215497fcd4c55d028a68fb72e99e61ff40da4d6",
+                "PGDATA=/var/lib/postgresql/data"
+            ],
+            "Cmd": [
+                "postgres"
+            ],
+            "Image": "postgres:15-alpine",
+            "Volumes": {
+                "/var/lib/postgresql/data": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {},
+            "StopSignal": "SIGINT"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "73f7d314d6d1004d3a54c566a84d9912e534179a06115599ed7bbe1508171018",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "5432/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "5432"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "5432"
+                    }
+                ]
+            },
+            "SandboxKey": "/var/run/docker/netns/73f7d314d6d1",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "3387162575e421aa9f55aa916e9708e63295b0f9efda7604f8a781b8d1acb0e3",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "d783d2d537ced6293a0dcf17fbe3092a783ed82e14c2669223ec3789eda3b0d6",
+                    "EndpointID": "3387162575e421aa9f55aa916e9708e63295b0f9efda7604f8a781b8d1acb0e3",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
