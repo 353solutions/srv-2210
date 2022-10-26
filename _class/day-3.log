@@ -1237,3 +1237,333 @@ $ docker inspect 68f510fecf9a
         }
     }
 ]
+unter on  main [!?] via go v1.19.2 
+❮ docker inspect 68f510fecf9a
+
+unter on  main [!?] via go v1.19.2 
+$ go test -v ./... 
+=== RUN   TestRideFee
+=== RUN   TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750}
+=== RUN   TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675}
+--- PASS: TestRideFee (0.00s)
+    --- PASS: TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750} (0.00s)
+    --- PASS: TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675} (0.00s)
+PASS
+ok  	github.com/353solutions/unter	(cached)
+?   	github.com/353solutions/unter/cache	[no test files]
+=== RUN   TestHealth
+--- PASS: TestHealth (0.00s)
+PASS
+ok  	github.com/353solutions/unter/client	(cached)
+=== RUN   TestIntegrationCache
+    docker_test.go:36: image: "redis:7-alpine", container: "9ab019577e1c6b5edf73783762cdd55144c198a41073dc04884c2e1721d1f1c0"
+    docker_test.go:19: redis on 49155
+--- PASS: TestIntegrationCache (0.55s)
+=== RUN   Test_healthHandler
+    main_test.go:51: pattern: /
+2022/10/26 22:56:01 /health called (rid = baae85ae-4329-4a49-96fb-fd53418a5b30)
+2022/10/26 22:56:01 /health ended in 213.111µs (rid = baae85ae-4329-4a49-96fb-fd53418a5b30)
+--- PASS: Test_healthHandler (0.01s)
+=== RUN   Test_startHandler
+--- PASS: Test_startHandler (0.01s)
+PASS
+ok  	github.com/353solutions/unter/cmd/httpd	0.568s
+?   	github.com/353solutions/unter/db	[no test files]
+?   	github.com/353solutions/unter/logger	[no test files]
+unter on  main [!?] via go v1.19.2 
+$ docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED       STATUS       PORTS                                       NAMES
+c298be5b0c40   redis:7-alpine       "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:6379->6379/tcp, :::6379->6379/tcp   busy_goldstine
+68f510fecf9a   postgres:15-alpine   "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   hopeful_meitner
+
+unter on  main [!?] via go v1.19.2 
+$ go test -v -run NONE -bench .
+goos: linux
+goarch: amd64
+pkg: github.com/353solutions/unter
+cpu: 12th Gen Intel(R) Core(TM) i7-1255U
+BenchmarkByDriver
+BenchmarkByDriver-12    	      10	 113138526 ns/op
+PASS
+ok  	github.com/353solutions/unter	1.290s
+
+unter on  main [!] via go v1.19.2 
+$ go test -v -run NONE -bench . -benchmem
+goos: linux
+goarch: amd64
+pkg: github.com/353solutions/unter
+cpu: 12th Gen Intel(R) Core(TM) i7-1255U
+BenchmarkByDriver
+BenchmarkByDriver-12    	       9	 111977128 ns/op	  100960 B/op	      12 allocs/op
+PASS
+ok  	github.com/353solutions/unter	1.167s
+
+unter on  main [!] via go v1.19.2 
+$echo 111977128/1e9 | bc -lq
+(standard_in) 1: syntax error
+
+unter on  main [!] via go v1.19.2 
+$ echo 111977128/1000000000 | bc -lq
+.11197712800000000000
+
+unter on  main [!] via go v1.19.2 
+$ go test -v -run NONE -bench . -benchmem
+goos: linux
+goarch: amd64
+pkg: github.com/353solutions/unter
+cpu: 12th Gen Intel(R) Core(TM) i7-1255U
+BenchmarkByDriver
+BenchmarkByDriver-12    	      10	 108993051 ns/op	  100960 B/op	      12 allocs/op
+PASS
+ok  	github.com/353solutions/unter	2.158s
+
+unter on  main [!] via go v1.19.2 took 2s 
+$ go test -v -run NONE -bench . -benchmem
+goos: linux
+goarch: amd64
+pkg: github.com/353solutions/unter
+cpu: 12th Gen Intel(R) Core(TM) i7-1255U
+BenchmarkByDriver
+BenchmarkByDriver-12    	       9	 111562028 ns/op	  100960 B/op	      12 allocs/op
+PASS
+ok  	github.com/353solutions/unter	1.180s
+
+unter on  main [!] via go v1.19.2 
+$ go test -v -run NONE -bench . -benchmem
+goos: linux
+goarch: amd64
+pkg: github.com/353solutions/unter
+cpu: 12th Gen Intel(R) Core(TM) i7-1255U
+BenchmarkByDriverBenchmarkByDriver-12    	      10	 110067206 ns/op	  100960 B/op	      12 allocs/op
+PASS
+ok  	github.com/353solutions/unter	2.267s
+
+unter on  main [!] via go v1.19.2 took 2s 
+$ go test -v -run NONE -bench . -benchmem -cpuprofile=cpu.pprof
+goos: linux
+goarch: amd64
+pkg: github.com/353solutions/unter
+cpu: 12th Gen Intel(R) Core(TM) i7-1255U
+BenchmarkByDriver
+BenchmarkByDriver-12    	      10	 109512252 ns/op	  101161 B/op	      12 allocs/op
+PASS
+ok  	github.com/353solutions/unter	1.452s
+
+unter on  main [!?] via go v1.19.2 
+$ ls
+cache  _class  client  cmd  cpu.pprof  db  go.mod  go.sum  logger  Makefile  README.md  report.go  report_test.go  unter.go  unter.test
+
+unter on  main [!?] via go v1.19.2 
+$ ls -lh
+total 5.1M
+drwxr-xr-x 2 miki miki 4.0K Oct 25 22:29 cache
+drwxr-xr-x 2 miki miki 4.0K Oct 26 19:52 _class
+drwxr-xr-x 2 miki miki 4.0K Oct 26 22:28 client
+drwxr-xr-x 3 miki miki 4.0K Oct 24 20:29 cmd
+-rw-r--r-- 1 miki miki 1.6K Oct 26 23:33 cpu.pprof
+drwxr-xr-x 3 miki miki 4.0K Oct 25 20:48 db
+-rw-r--r-- 1 miki miki  536 Oct 26 20:22 go.mod
+-rw-r--r-- 1 miki miki 3.7K Oct 26 20:21 go.sum
+drwxr-xr-x 2 miki miki 4.0K Oct 25 23:22 logger
+-rw-r--r-- 1 miki miki  149 Oct 26 20:37 Makefile
+-rw-r--r-- 1 miki miki 4.9K Oct 26 23:02 README.md
+-rw-r--r-- 1 miki miki 1001 Oct 26 23:17 report.go
+-rw-r--r-- 1 miki miki 1.6K Oct 26 23:28 report_test.go
+-rw-r--r-- 1 miki miki 1.1K Oct 26 20:39 unter.go
+-rwxr-xr-x 1 miki miki 5.0M Oct 26 23:33 unter.test
+unter on  main [!] via go v1.19.2 
+$ go tool pprof cpu.pprof 
+File: unter.test
+Type: cpu
+Time: Oct 26, 2022 at 11:33pm (IDT)
+Duration: 1.40s, Total samples = 1.23s (87.58%)
+Entering interactive mode (type "help" for commands, "o" for options)
+(pprof) q
+
+unter on  main [!] via go v1.19.2 took 6s 
+$ go tool pprof -http=:9999 cpu.pprof
+Serving web UI on http://localhost:9999
+libva error: /usr/lib/dri/i965_drv_video.so init failed
+^Cgo tool pprof: signal: interrupt
+
+unter on  main [!] via go v1.19.2 took 8m24s 
+❮ go test -v -run NONE -bench . -benchmem -cpuprofile=cpu.pprof
+goos: linux
+goarch: amd64
+pkg: github.com/353solutions/unter
+cpu: 12th Gen Intel(R) Core(TM) i7-1255U
+BenchmarkByDriver
+BenchmarkByDriver-12    	     355	   3414833 ns/op	  186869 B/op	    1040 allocs/op
+PASS
+ok  	github.com/353solutions/unter	1.755s
+
+unter on  main [!] via go v1.19.2 took 2s 
+❮ go tool pprof -http=:9999 cpu.pprof                          
+Serving web UI on http://localhost:9999
+libva error: /usr/lib/dri/i965_drv_video.so init failed
+^Cgo tool pprof: signal: interrupt
+
+unter on  main [!] via go v1.19.2 took 1m34s 
+$ go tool pprof http://localhost:6060/debug/pprof/profile\?seconds\=30
+
+Fetching profile over HTTP from http://localhost:6060/debug/pprof/profile?seconds=30
+http://localhost:6060/debug/pprof/profile?seconds=30: Get "http://localhost:6060/debug/pprof/profile?seconds=30": dial tcp [::1]:6060: connect: connection refused
+failed to fetch any source profiles
+
+unter on  main [!] via go v1.19.2 
+❮ go tool pprof http://localhost:8080/debug/pprof/profile\?seconds\=30
+
+Fetching profile over HTTP from http://localhost:8080/debug/pprof/profile?seconds=30
+Saved profile in /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz
+File: __debug_bin
+Type: cpu
+Time: Oct 26, 2022 at 11:49pm (IDT)
+Duration: 30.02s, Total samples = 0 
+No samples were found with the default sample value type.
+Try "sample_index" command to analyze different sample values.
+Entering interactive mode (type "help" for commands, "o" for options)
+(pprof) q
+
+unter on  main [!] via go v1.19.2 took 35s 
+$ ls /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz
+/home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz
+
+unter on  main [!] via go v1.19.2 
+$ go tool pprof -http=:9999 /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz
+Serving web UI on http://localhost:9999
+libva error: /usr/lib/dri/i965_drv_video.so init failed^Cgo tool pprof: signal: interrupt
+
+unter on  main [!] via go v1.19.2 took 13s 
+$ gunzip /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz
+
+unter on  main [!] via go v1.19.2 
+❮ go tool pprof -http=:9999 /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb   
+Serving web UI on http://localhost:9999
+libva error: /usr/lib/dri/i965_drv_video.so init failed
+^Cgo tool pprof: signal: interrupt
+
+unter on  main [!] via go v1.19.2 took 16s 
+$ rm /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb   
+
+unter on  main [!] via go v1.19.2 
+$ file cpu.pprof 
+cpu.pprof: gzip compressed data, max speed, original size modulo 2^32 5835
+
+unter on  main [!] via go v1.19.2 
+$ rm cpu.pprof 
+
+unter on  main [!] via go v1.19.2 
+❮ go tool pprof http://localhost:8080/debug/pprof/profile\?seconds\=go tool pprof -http=:9999 /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.z 
+
+unter on  main [!] via go v1.19.2 
+$ hey -z1s http://localhost:8080/health
+flag provided but not defined: -z1s
+Usage: hey [options...] <url>
+
+Options:
+  -n  Number of requests to run. Default is 200.
+  -c  Number of workers to run concurrently. Total number of requests cannot
+      be smaller than the concurrency level. Default is 50.
+  -q  Rate limit, in queries per second (QPS) per worker. Default is no rate limit.
+  -z  Duration of application to send requests. When duration is reached,
+      application stops and exits. If duration is specified, n is ignored.
+      Examples: -z 10s -z 3m.
+  -o  Output type. If none provided, a summary is printed.
+      "csv" is the only supported alternative. Dumps the response
+      metrics in comma-separated values format.
+
+  -m  HTTP method, one of GET, POST, PUT, DELETE, HEAD, OPTIONS.
+  -H  Custom HTTP header. You can specify as many as needed by repeating the flag.
+      For example, -H "Accept: text/html" -H "Content-Type: application/xml" .
+  -t  Timeout for each request in seconds. Default is 20, use 0 for infinite.
+  -A  HTTP Accept header.
+  -d  HTTP request body.
+  -D  HTTP request body from file. For example, /home/user/file.txt or ./file.txt.
+  -T  Content-type, defaults to "text/html".
+  -a  Basic authentication, username:password.
+  -x  HTTP Proxy address as host:port.
+  -h2 Enable HTTP/2.
+
+  -host	HTTP Host header.
+
+  -disable-compression  Disable compression.
+  -disable-keepalive    Disable keep-alive, prevents re-use of TCP
+                        connections between different HTTP requests.
+  -disable-redirects    Disable following of HTTP redirects
+  -cpus                 Number of used cpu cores.
+                        (default for current machine is 12 cores)
+unter on  main [!] via go v1.19.2 
+$ hey -z 1s http://localhost:8080/health
+
+Summary:
+  Total:	1.0276 secs
+  Slowest:	0.2189 secs
+  Fastest:	0.0009 secs
+  Average:	0.0395 secs
+  Requests/sec:	1243.6228
+  
+  Total data:	30672 bytes
+  Size/request:	24 bytes
+
+Response time histogram:
+  0.001 [1]	|
+  0.023 [391]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.044 [400]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.066 [355]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.088 [72]	|■■■■■■■
+  0.110 [22]	|■■
+  0.132 [17]	|■■
+  0.154 [0]	|
+  0.175 [2]	|
+  0.197 [16]	|■■
+  0.219 [2]	|
+
+
+Latency distribution:
+  10% in 0.0072 secs
+  25% in 0.0158 secs
+  50% in 0.0390 secs
+  75% in 0.0527 secs
+  90% in 0.0673 secs
+  95% in 0.0836 secs
+  99% in 0.1778 secs
+
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0003 secs, 0.0009 secs, 0.2189 secs
+  DNS-lookup:	0.0002 secs, 0.0000 secs, 0.0074 secs
+  req write:	0.0000 secs, 0.0000 secs, 0.0036 secs
+  resp wait:	0.0392 secs, 0.0008 secs, 0.2124 secs
+  resp read:	0.0000 secs, 0.0000 secs, 0.0005 secs
+
+Status code distribution:
+  [200]	1278 responses
+
+
+
+unter on  main [!] via go v1.19.2 
+$ /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz/home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz/home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz/home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz/home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz/home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz/home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz
+
+unter on  main [!] via go v1.19.2 
+$ go tool pprof http://localhost:8080/debug/pprof/profile\?seconds\=10
+
+Fetching profile over HTTP from http://localhost:8080/debug/pprof/profile?seconds=10
+Saved profile in /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz
+File: __debug_bin
+Type: cpu
+Time: Oct 26, 2022 at 11:54pm (IDT)
+Duration: 10.13s, Total samples = 38.93s (384.32%)
+Entering interactive mode (type "help" for commands, "o" for options)
+(pprof)q
+
+unter on  main [!] via go v1.19.2 took 16s 
+$ go tool pprof -http=:9999 /home/miki/pprof/pprof.__debug_bin.samples.cpu.001.pb.gz
+Serving web UI on http://localhost:9999
+libva error: /usr/lib/dri/i965_drv_video.so init failed
+^Cgo tool pprof: signal: interrupt
+
+unter on  main [!] via go v1.19.2 took 44s 
+$

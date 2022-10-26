@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/http/pprof"
 	"os"
 	"os/signal"
 	"syscall"
@@ -326,6 +327,7 @@ func buildRouter(s *Server) *http.ServeMux {
 	r.HandleFunc("/rides", s.startHandler).Methods("POST")
 	r.HandleFunc("/rides/{id}", s.getHandler).Methods("GET")
 	r.HandleFunc("/rides/{id}/end", s.endHandler).Methods("POST")
+	r.HandleFunc("/debug/pprof/profile", pprof.Profile)
 
 	mux := http.NewServeMux()
 	mux.Handle("/", addLogging(s.log, r))

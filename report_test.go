@@ -2,6 +2,7 @@ package unter_test
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 	"time"
 
@@ -39,5 +40,38 @@ func TestRideFee(t *testing.T) {
 			fee := unter.RideFee(tc.duration, tc.distance, tc.shared)
 			require.Equal(t, tc.expected, fee)
 		})
+	}
+}
+
+var (
+	rides []unter.Ride
+	// Numbers from from statistics of real data Jan-June 2020
+	nDrivers = 1000
+	nRides   = 100 // per driver
+)
+
+func init() {
+	for d := 0; d < nDrivers; d++ {
+		driver := fmt.Sprintf("drv-%d", d)
+		for i := 0; i < nRides; i++ {
+			start := time.Now()
+			r := unter.Ride{
+				Driver:   driver,
+				Start:    start,
+				End:      start.Add(time.Duration(rand.Intn(100)) * time.Minute),
+				Distance: rand.Float64() * 30,
+			}
+			rides = append(rides, r)
+		}
+	}
+	rand.Shuffle(len(rides), func(i, j int) { rides[i], rides[j] = rides[j], rides[i] })
+}
+
+func BenchmarkByDriver(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		rs := unter.ByDriver(rides)
+		if len(rs) != nDrivers {
+			b.Fatal(rs)
+		}
 	}
 }

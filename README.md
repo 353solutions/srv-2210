@@ -27,6 +27,10 @@ Miki Tebeka
 
 ### Links
 
+- Linters
+    - [staticcheck](https://staticcheck.io/)
+    - [golangci-lint](https://golangci-lint.run/)
+    - Write your own with [x/tools/go/analysis](https://pkg.go.dev/golang.org/x/tools/go/analysis)
 - Testing
     - [testing](https://pkg.go.dev/testing/)
     - [testify](https://pkg.go.dev/github.com/stretchr/testify) - Many test utilities (including suites & mocking)
@@ -34,12 +38,14 @@ Miki Tebeka
         - [testing/quick](https://pkg.go.dev/testing/quick) - Initial fuzzing library
     - [test containers](https://golang.testcontainers.org/)
     - [net/http/httptest](https://pkg.go.dev/net/http/httptest)
+    - [How SQLite is Tested](https://www.sqlite.org/testing.html)
 - Performance Optimization
-    - Miki's [Optimization](optimize.html) guidelines
+    - Miki's [Optimization](_class/optimize.md) guidelines
     - [Amdahl's Law](https://en.wikipedia.org/wiki/Amdahl%27s_law) - Limits of concurrency
     - [Computer Latency at Human Scale](https://twitter.com/jordancurve/status/1108475342468120576/photo/1)
     - [Rules of Optimization Club](https://wiki.c2.com/?RulesOfOptimizationClub)
-    - [Profiling Go Programs](https://blog.golang.org/2011/06/profiling-go-programs.html)
+    - [Profiling Go Programs](https://go.dev/blog/pprof) In the Go blog
+    - [High Performance Go Workshop](https://dave.cheney.net/high-performance-go-workshop/gophercon-2019.html) by Dave Cheney
     - [hey](https://github.com/rakyll/hey)
         - `go install github.com/rakyll/hey@latest`
         - `export PATH=$(go env GOPATH)/bin:${PATH}`

@@ -8,12 +8,6 @@ const (
 	perHour = 3000
 )
 
-type Report struct {
-	Driver   string
-	NumRides int
-	Payment  int
-}
-
 // RideFee returns the ride fee in ¢
 func RideFee(duration time.Duration, distance float64, shared bool) int {
 	m := perMile * distance
@@ -35,29 +29,31 @@ func max(a, b float64) float64 {
 	return b
 }
 
-func findReport(driver string, rs []Report) int {
-	for i, r := range rs {
-		if r.Driver == driver {
-			return i
-		}
-	}
-
-	return -1
+type Report struct {
+	Driver   string
+	NumRides int
+	Payment  int
 }
 
 func ByDriver(rides []Ride) []Report {
-	var rs []Report
+	rs := make(map[string]*Report) // driver -> report
 	for _, r := range rides {
-		i := findReport(r.Driver, rs)
-		if i == -1 {
-			rs = append(rs, Report{Driver: r.Driver})
-			i = len(rs) - 1
+		rp, ok := rs[r.Driver]
+		if !ok {
+			rp = &Report{
+				Driver: r.Driver,
+			}
+			rs[r.Driver] = rp
 		}
-		rs[i].NumRides++
+		rp.NumRides++
 
 		duration := r.End.Sub(r.Start)
-		rs[i].Payment += RideFee(duration, r.Distance, r.Kind == Shared) - 30
+		rp.Payment += RideFee(duration, r.Distance, r.Kind == Shared) - 30
 	}
 
-	return rs
+	reports := make([]Report, 0, len(rs))
+	for _, rp := range rs {
+		reports = append(reports, *rp)
+	}
+	return reports
 }
