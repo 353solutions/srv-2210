@@ -7,6 +7,7 @@ import (
 	"errors"
 	"expvar"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"net/http/pprof"
@@ -52,7 +53,8 @@ var (
 	getCalls = expvar.NewInt("get.calls")
 
 	//go:embed html/info.html
-	infoHTML string
+	infoHTML     string
+	infoTemplate *template.Template
 )
 
 type Server struct {
@@ -340,9 +342,11 @@ func (s *Server) infoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fee := unter.RideFee(rd.End.Sub(rd.Start), rd.Distance, rd.Kind == unter.Shared.String())
+	// fee := unter.RideFee(rd.End.Sub(rd.Start), rd.Distance, rd.Kind == unter.Shared.String())
 	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprintf(w, infoHTML, rd.ID, rd.Driver, rd.Start, rd.End, rd.Kind, rd.Distance, fee)
+	// exercise: replace printf with html/template
+	// fmt.Fprintf(w, infoHTML, rd.ID, rd.Driver, rd.Start, rd.End, rd.Kind, rd.Distance, fee)
+	infoTemplate.Execute(w, rd)
 }
 
 var version = "1.2.3"
@@ -364,6 +368,13 @@ func buildRouter(s *Server) *http.ServeMux {
 }
 
 func main() {
+	var err error
+	infoTemplate, err = template.New("info").Parse(infoHTML)
+	if err != nil {
+		log.Printf("ERROR: can't compile template - %s", err)
+		os.Exit(1)
+	}
+
 	cfg, err := loadConfig()
 	if err != nil {
 		log.Printf("ERROR: can't load config - %s", err)

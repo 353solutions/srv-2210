@@ -4,14 +4,14 @@
 		<title>Ride Info</title>
 	</head>
 	<body>
-		<h1>%v</h1>
+		<h1>{{ .ID }}</h1>
 		<ul>
-			<li>driver: %v</li>
-			<li>start: %v</li>
-			<li>end: %v</li>
-			<li>kind: %v</li>
-			<li>distance: %v</li>
-			<li>fee: %v¢</li>
+			<li>driver: {{ .Driver }}</li>
+			<li>start: {{ .Start.Format "2006-01-02T15:04:05" }} </li>
+			<li>end: {{ .End.Format "2006-01-02T15:04:05" }}</li>
+			<li>kind: {{ .Kind }}</li>
+			<li>distance: {{ .Distance }}</li>
+<!--			<li>fee: %v¢</li> -->
 		</ul>
 	</body>
 </html>
