@@ -12,6 +12,31 @@ Miki Tebeka
 
 ---
 
+## Day 4
+
+### Agenda
+
+- Security best practices
+- OWASP top 10
+- The security mindset
+
+
+[Terminal Log](_class/day-4.log)
+
+### Links
+
+- [OWASP top 10](https://owasp.org/www-project-top-ten/)
+- [gosec](https://github.com/securego/gosec) - Security oriented linter
+- [html/template](https://pkg.go.dev/html/template)
+- [gorilla/handlers](https://pkg.go.dev/github.com/gorilla/handlers) - CORS
+
+### Data & Other
+
+
+- `curl -d@./_class/start.json http://localhost:8080/rides`
+
+---
+
 ## Day 3
 
 ### Agenda
@@ -21,7 +46,6 @@ Miki Tebeka
 - Running services in testing
 - Mocking
 - Performance optimization
-
 
 [Terminal Log](_class/day-3.log)
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	_ "embed"
 	"encoding/json"
 	"errors"
 	"expvar"
@@ -48,6 +49,9 @@ GET /rides?start=<time>&end=<time>
 
 var (
 	getCalls = expvar.NewInt("get.calls")
+
+	//go:embed html/info.html
+	infoHTML string
 )
 
 type Server struct {
@@ -319,6 +323,20 @@ func addLogging(log *log.Logger, h http.Handler) http.Handler {
 	return http.HandlerFunc(fn)
 }
 
+func (s *Server) infoHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	rd, err := s.db.Get(r.Context(), id)
+	if err != nil {
+		http.Error(w, "not found", http.StatusNotFound)
+		return
+	}
+
+	fee := unter.RideFee(rd.End.Sub(rd.Start), rd.Distance, rd.Kind == unter.Shared.String())
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, infoHTML, rd.ID, rd.Driver, rd.Start, rd.End, rd.Kind, rd.Distance, fee)
+}
+
 var version = "1.2.3"
 
 func buildRouter(s *Server) *http.ServeMux {
@@ -328,6 +346,7 @@ func buildRouter(s *Server) *http.ServeMux {
 	r.HandleFunc("/rides/{id}", s.getHandler).Methods("GET")
 	r.HandleFunc("/rides/{id}/end", s.endHandler).Methods("POST")
 	r.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	r.HandleFunc("/info/{id}", s.infoHandler)
 
 	mux := http.NewServeMux()
 	mux.Handle("/", addLogging(s.log, r))

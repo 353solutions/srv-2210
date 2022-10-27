@@ -1,0 +1,4 @@
+{
+  "driver": "Q <script>alert('Pwned!')</script>",
+  "kind": "shared"
+}
