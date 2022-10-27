@@ -17,7 +17,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 
 	"github.com/353solutions/unter"
@@ -125,6 +124,12 @@ func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := rd.Validate(); err != nil {
 		http.Error(w, "bad request", http.StatusBadRequest)
+		return
+	}
+
+	v := RequestValues(r.Context())
+	if v == nil || v.Login != rd.Driver {
+		http.Error(w, "forbidden", http.StatusForbidden)
 		return
 	}
 
@@ -294,45 +299,6 @@ Go -> JSON io.Writer: Encoder
 JSON -> Go io.Reader: Decoder
 */
 
-type keyType int
-
-var idKey keyType = 1
-
-func RequestID(ctx context.Context) string {
-	rid := ctx.Value(idKey)
-	if rid == nil {
-		return "XXX"
-	}
-
-	s, ok := rid.(string)
-	if !ok {
-		return "XXX"
-	}
-	return s
-}
-
-// middleware
-func addLogging(log *log.Logger, h http.Handler) http.Handler {
-	fn := func(w http.ResponseWriter, r *http.Request) {
-		// before
-		rid := uuid.NewString()
-		ctx := context.WithValue(r.Context(), idKey, rid)
-		r = r.Clone(ctx)
-
-		log.Printf("%s called (rid = %s)", r.URL.Path, rid)
-		start := time.Now()
-
-		h.ServeHTTP(w, r)
-
-		// after
-		duration := time.Since(start)
-		// exercise: Log the return HTTP status
-		log.Printf("%s ended in %v (rid = %s)", r.URL.Path, duration, rid)
-	}
-
-	return http.HandlerFunc(fn)
-}
-
 func (s *Server) infoHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -361,7 +327,7 @@ func buildRouter(s *Server) *http.ServeMux {
 	r.HandleFunc("/info/{id}", s.infoHandler)
 
 	mux := http.NewServeMux()
-	h := addLogging(s.log, r)
+	h := topMiddleware(s.log, r)
 	h = http.MaxBytesHandler(h, 3_000_000)
 	mux.Handle("/", h)
 	return mux
@@ -396,7 +362,8 @@ func main() {
 
 	}
 
-	logger.Printf("INFO: config=%#v", cfg)
+	// logger.Printf("INFO: config=%#v", cfg)
+	logger.Printf("INFO: config: Addr: %#v, CacheAddr: %#v, LogFile: %#v", cfg.Addr, cfg.CacheAddr, cfg.LogFile)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
