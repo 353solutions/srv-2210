@@ -12,6 +12,7 @@ import (
 	"net/http/pprof"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -92,6 +93,8 @@ func kindFromString(s string) (unter.Kind, error) {
 	return 0, fmt.Errorf("unknown kind: %s", s)
 }
 
+// const maxMsgSize = 3_000_000 // 3MB
+
 func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 	// Step 1: Unmarshal & Validate data
 	// {"driver": "Bond", "kind": "private"}
@@ -99,6 +102,8 @@ func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 		Driver string
 		Kind   string
 	}
+	// rdr := http.MaxBytesReader(w, r.Body, maxMsgSize)
+	// if err := json.NewDecoder(rdr).Decode(&req); err != nil {
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "bad json", http.StatusBadRequest)
 		return
@@ -112,7 +117,7 @@ func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 
 	rd := unter.Ride{
 		ID:     unter.NewID(),
-		Driver: req.Driver,
+		Driver: strings.ToValidUTF8(req.Driver, ""),
 		Kind:   k,
 		Start:  time.Now().UTC(),
 	}
@@ -171,7 +176,10 @@ func (s *Server) endHandler(w http.ResponseWriter, r *http.Request) {
 	if req.Distance == 0 {
 		http.Error(w, "missing distance", http.StatusBadRequest)
 		return
-
+	}
+	if req.Distance < 0 {
+		http.Error(w, "negative distance", http.StatusBadRequest)
+		return
 	}
 
 	vars := mux.Vars(r)
@@ -349,7 +357,9 @@ func buildRouter(s *Server) *http.ServeMux {
 	r.HandleFunc("/info/{id}", s.infoHandler)
 
 	mux := http.NewServeMux()
-	mux.Handle("/", addLogging(s.log, r))
+	h := addLogging(s.log, r)
+	h = http.MaxBytesHandler(h, 3_000_000)
+	mux.Handle("/", h)
 	return mux
 }
 

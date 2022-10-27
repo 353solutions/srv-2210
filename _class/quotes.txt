@@ -1,3 +1,7 @@
+First rule of computer security: don't buy a computer. Second rule: if you buy
+one, don't turn it on.
+    - Dark Avenger
+
 Don't design with interfaces, discover them.
     - Rob Pike
 
