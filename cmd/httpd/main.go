@@ -96,6 +96,11 @@ func kindFromString(s string) (unter.Kind, error) {
 
 // const maxMsgSize = 3_000_000 // 3MB
 
+/* auth middleware
+Writer -> POST, PUT
+Reader -> GET
+*/
+
 func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 	// Step 1: Unmarshal & Validate data
 	// {"driver": "Bond", "kind": "private"}
@@ -128,8 +133,13 @@ func (s *Server) startHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	v := RequestValues(r.Context())
-	if v == nil || v.Login != rd.Driver {
+	if v == nil || v.User.Login != rd.Driver {
 		http.Error(w, "forbidden", http.StatusForbidden)
+		return
+	}
+
+	if !HasRole(v.User, Writer, Admin) {
+		http.Error(w, "not allowed", http.StatusUnauthorized)
 		return
 	}
 
@@ -392,14 +402,16 @@ func main() {
 	mux := buildRouter(&s)
 
 	srv := http.Server{
-		Addr:    cfg.Addr,
-		Handler: mux,
+		Addr:         cfg.Addr,
+		Handler:      mux,
+		ReadTimeout:  time.Second,
+		WriteTimeout: 2 * time.Second,
 	}
 
 	logger.Printf("INFO: server starting on %s", cfg.Addr)
 	errCh := make(chan error)
 	go func() {
-		errCh <- srv.ListenAndServe()
+		errCh <- srv.ListenAndServeTLS("cert.pem", "key.pem")
 	}()
 
 	sigCh := make(chan os.Signal, 1)

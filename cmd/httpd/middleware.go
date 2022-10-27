@@ -16,7 +16,7 @@ var ctxKey keyType = 1
 
 type Values struct {
 	RequestID string
-	Login     string
+	User      User
 }
 
 func RequestValues(ctx context.Context) *Values {
@@ -38,21 +38,42 @@ func RequestID(ctx context.Context) string {
 
 var ErrBadLogin = errors.New("bad login")
 
-// FIXME: Use a real service
-// func LoginUser(login, passwd string) *User
-func LoginUser(login, passwd string) error {
-	ok := false
+type Role uint8
+
+const (
+	Viewer Role = iota + 1
+	Writer
+	Admin
+)
+
+type User struct {
+	Login string
+	Role  Role
+}
+
+func LoginUser(login, passwd string) (User, error) {
+	// FIXME: Use a real service
 	switch login {
 	case "Bond":
-		ok = passwd == "007"
+		if passwd == "007" {
+			return User{login, Writer}, nil
+		}
 	case "Q":
-		ok = passwd == "s3cr3t"
+		if passwd == "s3cr3t" {
+			return User{login, Viewer}, nil
+		}
 	}
 
-	if !ok {
-		return ErrBadLogin
+	return User{}, ErrBadLogin
+}
+
+func HasRole(u User, roles ...Role) bool {
+	for _, r := range roles {
+		if u.Role == r {
+			return true
+		}
 	}
-	return nil
+	return false
 }
 
 // middleware
@@ -66,11 +87,12 @@ func topMiddleware(log *log.Logger, h http.Handler) http.Handler {
 
 		login, passwd, ok := r.BasicAuth()
 		if ok {
-			if err := LoginUser(login, passwd); err != nil {
+			user, err := LoginUser(login, passwd)
+			if err != nil {
 				http.Error(w, "bad login", http.StatusForbidden)
 				return
 			}
-			v.Login = login
+			v.User = user
 		}
 
 		ctx := context.WithValue(r.Context(), ctxKey, &v)
