@@ -82,7 +82,7 @@ func Test_startHandler(t *testing.T) {
 	r := httptest.NewRequest(http.MethodPost, "/rides", &buf)
 	v := Values{
 		RequestID: uuid.NewString(),
-		User:      User{"joe", Admin},
+		User:      User{"q", Admin},
 	}
 	ctx := context.WithValue(r.Context(), ctxKey, &v)
 	r = r.Clone(ctx)
