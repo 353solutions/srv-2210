@@ -25,6 +25,10 @@ Miki Tebeka
 
 ### Links
 
+- [casbin](https://github.com/casbin/casbin) - Authorization framework
+- [golang.org/x/crypto/acme/autocert](https://pkg.go.dev/golang.org/x/crypto/acme/autocert) - Certificates from Let's Encrypt
+- [Guide to HTTP timeouts](https://blog.cloudflare.com/the-complete-guide-to-golang-net-http-timeouts/)
+- [golang.org/x/time/rate](https://pkg.go.dev/golang.org/x/time/rate) Rate limiting
 - [OWASP top 10](https://owasp.org/www-project-top-ten/)
 - [gosec](https://github.com/securego/gosec) - Security oriented linter
 - [html/template](https://pkg.go.dev/html/template)
@@ -34,6 +38,7 @@ Miki Tebeka
 
 
 - `curl -d@./_class/start.json http://localhost:8080/rides`
+- `curl -uBond:007 -d@./_class/start.json http://localhost:8080/rides`
 
 ---
 

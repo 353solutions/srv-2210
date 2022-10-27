@@ -12,6 +12,7 @@ import (
 
 	"github.com/353solutions/unter/cache"
 	"github.com/353solutions/unter/db"
+	"github.com/google/uuid"
 
 	"github.com/stretchr/testify/require"
 )
@@ -79,6 +80,12 @@ func Test_startHandler(t *testing.T) {
 	err := json.NewEncoder(&buf).Encode(msg)
 	require.NoError(err, "json encode")
 	r := httptest.NewRequest(http.MethodPost, "/rides", &buf)
+	v := Values{
+		RequestID: uuid.NewString(),
+		User:      User{"joe", Admin},
+	}
+	ctx := context.WithValue(r.Context(), ctxKey, &v)
+	r = r.Clone(ctx)
 	// r.Header.Set()
 	// r.BasicAuth("bond", "007")
 

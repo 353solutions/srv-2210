@@ -49,7 +49,9 @@ GET /rides?start=<time>&end=<time>
 */
 
 var (
-	getCalls = expvar.NewInt("get.calls")
+	getCalls  = expvar.NewInt("get.calls")
+	okLogins  = expvar.NewInt("sec.logins.ok")
+	badLogins = expvar.NewInt("sec.logins.fail")
 
 	//go:embed html/info.html
 	infoHTML     string
@@ -80,7 +82,9 @@ func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
-	sendJSON(w, resp)
+	if err := sendJSON(w, resp); err != nil {
+		log.Printf("WARNING: can't send - %s", err)
+	}
 }
 
 func kindFromString(s string) (unter.Kind, error) {
@@ -208,7 +212,10 @@ func (s *Server) endHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	rd.Distance = req.Distance
 	rd.End = time.Now().UTC()
-	s.db.Update(r.Context(), rd)
+	if err := s.db.Update(r.Context(), rd); err != nil {
+		http.Error(w, "can't update", http.StatusInternalServerError)
+		return
+	}
 	// TODO: invalidate cache
 
 	resp := map[string]any{
@@ -230,7 +237,7 @@ func sendJSON(w http.ResponseWriter, val any) error {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(data)
+	w.Write(data) //#nosec G104
 	return nil
 }
 
@@ -266,7 +273,7 @@ func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		log.Printf("INFO: cache hit - %s", id)
 		w.Header().Set("Content-Type", "application/json")
-		w.Write(data)
+		w.Write(data) //#nosec G104
 		return
 	}
 
@@ -293,7 +300,7 @@ func (s *Server) getHandler(w http.ResponseWriter, r *http.Request) {
 
 	data, err = json.Marshal(resp)
 	if err == nil {
-		s.cache.Set(r.Context(), id, data)
+		s.cache.Set(r.Context(), id, data) //#nosec G104
 	}
 
 	if err := sendJSON(w, resp); err != nil {
@@ -322,7 +329,9 @@ func (s *Server) infoHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	// exercise: replace printf with html/template
 	// fmt.Fprintf(w, infoHTML, rd.ID, rd.Driver, rd.Start, rd.End, rd.Kind, rd.Distance, fee)
-	infoTemplate.Execute(w, rd)
+	if err := infoTemplate.Execute(w, rd); err != nil {
+		s.log.Printf("WARNING: failed to executed template - %s", err)
+	}
 }
 
 var version = "1.2.3"
@@ -423,7 +432,9 @@ func main() {
 		logger.Printf("INFO: caught signal %v, shutting down", sig)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
-		srv.Shutdown(ctx)
+		if err := srv.Shutdown(ctx); err != nil {
+			logger.Printf("WARNING: shutdown error - %s", err)
+		}
 	case err := <-errCh:
 		if !errors.Is(err, http.ErrServerClosed) {
 			logger.Printf("ERROR: %s", err)

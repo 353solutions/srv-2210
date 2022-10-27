@@ -1,0 +1,736 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++--------------------------------------+------------------------------------+--------+----------------------------+---------------------+----------+
+| id                                   | driver                             | kind   | start_time                 | end_time            | distance |
+|--------------------------------------+------------------------------------+--------+----------------------------+---------------------+----------|
+| dbe1903a-8474-4483-94a4-4e029b9633f8 | q                                  | shared | 2022-10-26 18:57:37.58146  | 0001-01-01 00:00:00 | 0.0      |
+| 2f819eba-1b2a-45c5-901e-b23cc55b8b9b | q                                  | shared | 2022-10-26 19:37:18.113283 | 0001-01-01 00:00:00 | 0.0      |
+| d3ea8752-6b72-43be-ba27-26892003ac78 | q                                  | shared | 2022-10-26 19:56:01.385269 | 0001-01-01 00:00:00 | 0.0      |
+| 5d992b99-fc35-4155-aba5-8044cf85e0a3 | Q <script>alert('Pwned!')</script> | shared | 2022-10-27 06:46:11.311614 | 0001-01-01 00:00:00 | 0.0      |
++--------------------------------------+------------------------------------+--------+----------------------------+---------------------+----------+
+SELECT 4
+(END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++--------------------------------------+------------------------------------+--------+----------------------------+---------------------+----------+
+| id                                   | driver                             | kind   | start_time                 | end_time            | distance |
+|--------------------------------------+------------------------------------+--------+----------------------------+---------------------+----------|
+| dbe1903a-8474-4483-94a4-4e029b9633f8 | q                                  | shared | 2022-10-26 18:57:37.58146  | 0001-01-01 00:00:00 | 0.0      |
+| 2f819eba-1b2a-45c5-901e-b23cc55b8b9b | q                                  | shared | 2022-10-26 19:37:18.113283 | 0001-01-01 00:00:00 | 0.0      |
+| d3ea8752-6b72-43be-ba27-26892003ac78 | q                                  | shared | 2022-10-26 19:56:01.385269 | 0001-01-01 00:00:00 | 0.0      |
+| 5d992b99-fc35-4155-aba5-8044cf85e0a3 | Q <script>alert('Pwned!')</script> | shared | 2022-10-27 06:46:11.311614 | 0001-01-01 00:00:00 | 0.0      |
++--------------------------------------+------------------------------------+--------+----------------------------+---------------------+----------+
+SELECT 4
+(ENDthub.com:353solutions/srv-2210.git
+   237f7a9..3b7a0cf  main -> main
+
+unter on  main via go v1.19.2 took 2s 
+$ curl -u Bond:007 -d'{"driver": "Bond", "kind": "shared"}' http://localhost:8080/rides
+{"action":"start","id":"fa9351c0-7b5a-473d-a1ed-2c8246a3ad2d"}%                                                                         
+unter on  main [!] via go v1.19.2 
+$ curl -u Q:s3cr3t -d'{"driver": "Q", "kind": "shared"}' http://localhost:8080/rides
+not allowed
+
+unter on  main [!] via go v1.19.2 
+$ curl http://localhost:8080/health
+{"cache":null,"db":null}%                                                                                                               
+unter on  main [!] via go v1.19.2 
+$ chmod +x _class/gen-certs.sh 
+
+unter on  main [!?] via go v1.19.2 
+$ ./_class/gen-certs.sh 
+./_class/gen-certs.sh: line 8: unexpected EOF while looking for matching ``'
+./_class/gen-certs.sh: line 9: syntax error: unexpected end of file
+
+unter on  main [!?] via go v1.19.2 
+❮ ./_class/gen-certs.sh
+Generating a RSA private key
+...........................................................................++++
+.++++
+writing new private key to 'key.pem'
+-----
+
+unter on  main [!?] via go v1.19.2 
+$ls
+cache  cert.pem  _class  client  cmd  db  go.mod  go.sum  key.pem  logger  Makefile  README.md  report.go  report_test.go  unter.go
+
+unter on  main [!?] via go v1.19.2 
+$ mv *.pem cmd/httpd 
+
+unter on  main [!?] via go v1.19.2 
+$ curl http://localhost:8080/health
+Client sent an HTTP request to an HTTPS server.
+
+unter on  main [!?] via go v1.19.2 
+$ curl https://localhost:8080/health
+curl: (60) SSL certificate problem: self signed certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+
+unter on  main [!?] via go v1.19.2 
+$ curl --insecure https://localhost:8080/health
+{"cache":null,"db":null}%                                                                                                               
+unter on  main [!?] via go v1.19.2 
+$ curl -i --insecure https://localhost:8080/health
+HTTP/2 200 
+content-type: application/json
+content-length: 24
+date: Thu, 27 Oct 2022 19:45:34 GMT
+
+{"cache":null,"db":null}%                                                                                                               
+unter on  main [!?] via go v1.19.2 
+$curl --insecure http://localhost:8080/info/9cd116ad-ac15-404f-ac23-2278d1cf07a0
+Client sent an HTTP request to an HTTPS server.
+
+unter on  main [!?] via go v1.19.2 
+❮ curl --insecure http://localhost:8080/info/9cd116ad-ac15-404f-ac23-2278d1cf07a0
+
+unter on  main [!?] via go v1.19.2 
+$ go version
+go version go1.19.2 linux/amd64
+
+unter on  main [!?] via go v1.19.2 
+$ go mod vendor
+
+unter on  main [!?] via go v1.19.2 
+$ ls vendor 
+github.com  gopkg.in  modules.txt
+
+unter on  main [!?] via go v1.19.2 
+$ du -sh vendor 
+2.0M	vendor
+
+unter on  main [!?] via go v1.19.2 
+$ du -sh .
+9.2M	.
+
+unter on  main [!?] via go v1.19.2 
+$ rm -r vendor 
+
+unter on  main [!?] via go v1.19.2 
+$ du -sh .
+7.2M	.
+
+unter on  main [!?] via go v1.19.2 
+$du -sh .git
+6.2M	.git
+
+unter on  main [!?] via go v1.19.2 
+$ ls _class 
+day-1.log  day-3.log  gen-certs.sh  quotes.txt    run-db.sh      start.json
+day-2.log  day-4.log  optimize.md   run-cache.sh  secure-go.pdf  template_example.go
+
+unter on  main [!?] via go v1.19.2 
+$ git status -u
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   cmd/httpd/main.go
+	modified:   cmd/httpd/middleware.go
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	_class/gen-certs.sh
+	cmd/httpd/cert.pem
+	cmd/httpd/key.pem
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+unter on  main [!?] via go v1.19.2 
+$ git add cmd/ _class/
+
+unter on  main [+] via go v1.19.2 
+$ git status -u
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   _class/gen-certs.sh
+	new file:   cmd/httpd/cert.pem
+	new file:   cmd/httpd/key.pem
+	modified:   cmd/httpd/main.go
+	modified:   cmd/httpd/middleware.go
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .gitignore
+
+unter on  main [!+] via go v1.19.2 
+$ git add .gitignore 
+
+unter on  main [+] via go v1.19.2 
+$ git commit -m 'TLS & authorization'
+[main dc05dc0] TLS & authorization
+ 6 files changed, 141 insertions(+), 17 deletions(-)
+ create mode 100755 _class/gen-certs.sh
+ create mode 100644 cmd/httpd/cert.pem
+ create mode 100644 cmd/httpd/key.pem
+
+unter on  main [⇡] via go v1.19.2 
+$ git push
+Enumerating objects: 18, done.
+Counting objects: 100% (18/18), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (11/11), 5.22 KiB | 5.22 MiB/s, done.
+Total 11 (delta 4), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+
+unter on  main via go v1.19.2 took 2s 
+❮ go install golang.org/x/vuln/cmd/govulncheck@latest
+
+unter on  main via go v1.19.2 took 6s 
+$ govulncheck .
+govulncheck is an experimental tool. Share feedback at https://go.dev/s/govulncheck-feedback.
+
+Scanning for dependencies with known vulnerabilities...
+No vulnerabilities found.
+
+unter on  main via go v1.19.2 
+$govulncheck ./...
+govulncheck is an experimental tool. Share feedback at https://go.dev/s/govulncheck-feedback.
+
+Scanning for dependencies with known vulnerabilities...
+No vulnerabilities found.
+
+unter on  main [!] via go v1.19.2 
+$ make test
+staticcheck ./...
+govoluncheck .
+make: govoluncheck: No such file or directory
+make: *** [Makefile:6: test] Error 127
+
+unter on  main [!] via go v1.19.2 
+❮ make test
+staticcheck ./...
+govuluncheck .
+make: govuluncheck: No such file or directory
+make: *** [Makefile:6: test] Error 127
+
+unter on  main [!] via go v1.19.2 
+$ make test
+staticcheck ./...
+govulncheck .
+govulncheck is an experimental tool. Share feedback at https://go.dev/s/govulncheck-feedback.
+
+Scanning for dependencies with known vulnerabilities...
+No vulnerabilities found.
+go test -v ./...
+=== RUN   TestRideFee
+=== RUN   TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750}
+=== RUN   TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675}
+--- PASS: TestRideFee (0.00s)
+    --- PASS: TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750} (0.00s)
+    --- PASS: TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675} (0.00s)
+PASS
+ok  	github.com/353solutions/unter	0.049s
+?   	github.com/353solutions/unter/cache	[no test files]
+=== RUN   TestHealth
+--- PASS: TestHealth (0.00s)
+PASS
+ok  	github.com/353solutions/unter/client	(cached)=== RUN   TestIntegrationCache
+    docker_test.go:39: image: "redis:7-alpine", container: "94316757f228318c41f936bff6b41530e3238ab6102ff0b92a304de05d38cfb0"
+    docker_test.go:19: redis on 49156
+--- PASS: TestIntegrationCache (0.52s)
+=== RUN   Test_healthHandler
+    main_test.go:51: pattern: /
+2022/10/27 23:20:22 /health called (rid = da16007b-d0fe-4713-855a-0b01da9e0157)
+2022/10/27 23:20:22 /health ended in 271.14µs (rid = da16007b-d0fe-4713-855a-0b01da9e0157)
+--- PASS: Test_healthHandler (0.01s)
+=== RUN   Test_startHandler
+    main_test.go:89: 
+        	Error Trace:	/home/miki/teaching/practical-go-services/unter/cmd/httpd/main_test.go:89
+        	Error:      	Not equal: 
+        	            	expected: 200
+        	            	actual  : 403
+        	Test:       	Test_startHandler
+--- FAIL: Test_startHandler (0.01s)
+FAIL
+FAIL	github.com/353solutions/unter/cmd/httpd	0.532s
+?   	github.com/353solutions/unter/db	[no test files]
+?   	github.com/353solutions/unter/logger	[no test files]
+FAIL
+make: *** [Makefile:7: test] Error 1
+
+unter on  main [!] via go v1.19.2 
+❮ make test
+staticcheck ./...
+cmd/httpd/main_test.go:82:14: too many arguments in call to r.BasicAuth
+	have (string, string)
+	want () (compile)
+make: *** [Makefile:5: test] Error 1
+
+unter on  main [!] via go v1.19.2 
+$make test
+staticcheck ./...
+govulncheck .
+govulncheck is an experimental tool. Share feedback at https://go.dev/s/govulncheck-feedback.
+
+Scanning for dependencies with known vulnerabilities...
+No vulnerabilities found.
+go test -v ./...
+=== RUN   TestRideFee
+=== RUN   TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750}
+=== RUN   TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675}
+--- PASS: TestRideFee (0.00s)
+    --- PASS: TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750} (0.00s)
+    --- PASS: TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675} (0.00s)
+PASS
+ok  	github.com/353solutions/unter	(cached)
+?   	github.com/353solutions/unter/cache	[no test files]
+=== RUN   TestHealth
+--- PASS: TestHealth (0.00s)
+PASS
+ok  	github.com/353solutions/unter/client	(cached)
+=== RUN   TestIntegrationCache
+    docker_test.go:39: image: "redis:7-alpine", container: "01aa653b4395b219192d9896d40d265db25733f743ce199d3020c02bb779546e"
+    docker_test.go:19: redis on 49157
+--- PASS: TestIntegrationCache (0.52s)
+=== RUN   Test_healthHandler
+    main_test.go:51: pattern: /
+2022/10/27 23:21:25 /health called (rid = f08aed37-0ac9-479c-8aff-58f998e360ef)
+2022/10/27 23:21:25 /health ended in 146.1µs (rid = f08aed37-0ac9-479c-8aff-58f998e360ef)
+--- PASS: Test_healthHandler (0.01s)
+=== RUN   Test_startHandler
+    main_test.go:90: 
+        	Error Trace:	/home/miki/teaching/practical-go-services/unter/cmd/httpd/main_test.go:90
+        	Error:      	Not equal: 
+        	            	expected: 200
+        	            	actual  : 403
+        	Test:       	Test_startHandler
+--- FAIL: Test_startHandler (0.01s)
+FAIL
+FAIL	github.com/353solutions/unter/cmd/httpd	0.536s
+?   	github.com/353solutions/unter/db	[no test files]
+?   	github.com/353solutions/unter/logger	[no test files]
+FAIL
+make: *** [Makefile:7: test] Error 1
+unter on  main [!] via go v1.19.2 
+❮ make test
+staticcheck ./...
+govulncheck .
+govulncheck is an experimental tool. Share feedback at https://go.dev/s/govulncheck-feedback.
+
+Scanning for dependencies with known vulnerabilities...
+No vulnerabilities found.
+go test -v ./...
+=== RUN   TestRideFee
+=== RUN   TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750}
+=== RUN   TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000}
+=== RUN   TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675}
+--- PASS: TestRideFee (0.00s)
+    --- PASS: TestRideFee/{duration:1000000000_distance:0.1_shared:false_expected:250} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:false_expected:750} (0.00s)
+    --- PASS: TestRideFee/{duration:25200000000000_distance:3_shared:false_expected:21000} (0.00s)
+    --- PASS: TestRideFee/{duration:180000000000_distance:3_shared:true_expected:675} (0.00s)
+PASS
+ok  	github.com/353solutions/unter	(cached)
+?   	github.com/353solutions/unter/cache	[no test files]
+=== RUN   TestHealth
+--- PASS: TestHealth (0.00s)
+PASS
+ok  	github.com/353solutions/unter/client	(cached)
+=== RUN   TestIntegrationCache
+    docker_test.go:39: image: "redis:7-alpine", container: "cc2e49c440084a4ff5f329edbc5d73d54b97fb175b820577dcb78ba463bb056b"
+    docker_test.go:19: redis on 49158
+--- PASS: TestIntegrationCache (0.50s)
+=== RUN   Test_healthHandler
+    main_test.go:52: pattern: /
+2022/10/27 23:24:08 /health called (rid = d29f13e2-f26b-477a-a3fb-16184c9bdf23)
+2022/10/27 23:24:08 /health ended in 184.37µs (rid = d29f13e2-f26b-477a-a3fb-16184c9bdf23)
+--- PASS: Test_healthHandler (0.01s)
+=== RUN   Test_startHandler
+    main_test.go:96: 
+        	Error Trace:	/home/miki/teaching/practical-go-services/unter/cmd/httpd/main_test.go:96
+        	Error:      	Not equal: 
+        	            	expected: 200
+        	            	actual  : 403
+        	Test:       	Test_startHandler
+--- FAIL: Test_startHandler (0.00s)
+FAIL
+FAIL	github.com/353solutions/unter/cmd/httpd	0.509s
+?   	github.com/353solutions/unter/db	[no test files]
+?   	github.com/353solutions/unter/logger	[no test files]
+FAIL
+make: *** [Makefile:7: test] Error 1
+unter on  main [!] via go v1.19.2 
+$ curl --insecure -u Bond:007 -d'{"driver": "Bond", "kind": "shared"}' https://localhost:8080/rides
+{"action":"start","id":"4ada91a8-f6a5-4741-a8a8-9f5234a8648f"}%                                                                         
+unter on  main [!] via go v1.19.2 
+❮ curl --insecure -u Bond:008 -d'{"driver": "Bond", "kind": "shared"}' https://localhost:8080/rides
+bad login (b3d9aae6-1509-434e-9f4a-e9ceb7bc3de6)
+
+unter on  main [!] via go v1.19.2 
+$ make install-tools 
+go install honnef.co/go/tools/cmd/staticcheck@latest
+go install golang.org/x/vuln/cmd/govulncheck@latest
+curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | \
+	sh -s -- -b /bin v2.14.0
+securego/gosec info checking GitHub for tag 'v2.14.0'
+securego/gosec info found version: 2.14.0 for v2.14.0/linux/amd64
+install: cannot create regular file '/bin/gosec': Permission denied
+make: *** [Makefile:13: install-tools] Error 1
+
+unter on  main [!] via go v1.19.2 took 10s 
+❮ make install-tools
+go install honnef.co/go/tools/cmd/staticcheck@latest
+go install golang.org/x/vuln/cmd/govulncheck@latest
+curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | \
+	sh -s -- -b /home/miki/go/bin v2.14.0
+securego/gosec info checking GitHub for tag 'v2.14.0'
+securego/gosec info found version: 2.14.0 for v2.14.0/linux/amd64
+securego/gosec info installed /home/miki/go/bin/gosec
+
+unter on  main [!] via go v1.19.2 took 9s 
+$ go env GOPATH
+/home/miki/go
+unter on  main [!] via go v1.19.2 
+$ make go env GOPATH
+
+unter on  main [!] via go v1.19.2 
+$ make test
+staticcheck ./...
+govulncheck .
+govulncheck is an experimental tool. Share feedback at https://go.dev/s/govulncheck-feedback.
+
+Scanning for dependencies with known vulnerabilities...
+No vulnerabilities found.
+gosec ./...
+[gosec] 2022/10/27 23:37:43 Including rules: default
+[gosec] 2022/10/27 23:37:43 Excluding rules: default
+[gosec] 2022/10/27 23:37:43 Import directory: /home/miki/teaching/practical-go-services/unter/cache
+[gosec] 2022/10/27 23:37:43 Import directory: /home/miki/teaching/practical-go-services/unter/client
+[gosec] 2022/10/27 23:37:43 Import directory: /home/miki/teaching/practical-go-services/unter/_class
+[gosec] 2022/10/27 23:37:43 Import directory: /home/miki/teaching/practical-go-services/unter
+[gosec] 2022/10/27 23:37:43 Import directory: /home/miki/teaching/practical-go-services/unter/db
+[gosec] 2022/10/27 23:37:43 Import directory: /home/miki/teaching/practical-go-services/unter/cmd/httpd
+[gosec] 2022/10/27 23:37:43 Import directory: /home/miki/teaching/practical-go-services/unter/logger
+[gosec] 2022/10/27 23:37:43 Checking package: main
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/_class/template_example.go
+[gosec] 2022/10/27 23:37:43 Checking package: unter
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/report.go
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/unter.go
+[gosec] 2022/10/27 23:37:43 Checking package: logger
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/logger/logger.go
+[gosec] 2022/10/27 23:37:43 Checking package: db
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/db/db.go
+[gosec] 2022/10/27 23:37:43 Checking package: cache
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/cache/cache.go
+[gosec] 2022/10/27 23:37:43 Checking package: client
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/client/client.go[gosec] 2022/10/27 23:37:43 Checking package: main
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/config.go
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go
+[gosec] 2022/10/27 23:37:43 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/middleware.go
+Results:
+
+
+[/home/miki/teaching/practical-go-services/unter/logger/logger.go:13] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    12: 		flags := os.O_APPEND | os.O_CREATE | os.O_WRONLY
+  > 13: 		file, err := os.OpenFile(outFile, flags, 0644)
+    14: 		if err != nil {
+
+
+
+[/home/miki/teaching/practical-go-services/unter/logger/logger.go:13] - G302 (CWE-276): Expect file permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    12: 		flags := os.O_APPEND | os.O_CREATE | os.O_WRONLY
+  > 13: 		file, err := os.OpenFile(outFile, flags, 0644)
+    14: 		if err != nil {
+
+
+
+[/home/miki/teaching/practical-go-services/unter/db/db.go:56] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    55: 	if err := db.Health(ctx); err != nil {
+  > 56: 		conn.Close()
+    57: 		return nil, err
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:428] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    427: 		defer cancel()
+  > 428: 		srv.Shutdown(ctx)
+    429: 	case err := <-errCh:
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:327] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    326: 	// fmt.Fprintf(w, infoHTML, rd.ID, rd.Driver, rd.Start, rd.End, rd.Kind, rd.Distance, fee)
+  > 327: 	infoTemplate.Execute(w, rd)
+    328: }
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:298] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    297: 	if err == nil {
+  > 298: 		s.cache.Set(r.Context(), id, data)
+    299: 	}
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:271] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    270: 		w.Header().Set("Content-Type", "application/json")
+  > 271: 		w.Write(data)
+    272: 		return
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:235] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    234: 	w.Header().Set("Content-Type", "application/json")
+  > 235: 	w.Write(data)
+    236: 	return nil
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:213] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    212: 	rd.End = time.Now().UTC()
+  > 213: 	s.db.Update(r.Context(), rd)
+    214: 	// TODO: invalidate cache
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:85] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    84: 	}
+  > 85: 	sendJSON(w, resp)
+    86: }
+
+
+
+Summary:
+  Gosec  : 2.14.0
+  Files  : 10
+  Lines  : 1005
+  Nosec  : 1
+  Issues : 10
+
+make: *** [Makefile:7: test] Error 1
+unter on  main [!] via go v1.19.2 
+$ make test
+staticcheck ./...
+govulncheck .
+govulncheck is an experimental tool. Share feedback at https://go.dev/s/govulncheck-feedback.
+
+Scanning for dependencies with known vulnerabilities...
+No vulnerabilities found.
+gosec ./...
+[gosec] 2022/10/27 23:38:47 Including rules: default
+[gosec] 2022/10/27 23:38:47 Excluding rules: default
+[gosec] 2022/10/27 23:38:47 Import directory: /home/miki/teaching/practical-go-services/unter/cmd/httpd
+[gosec] 2022/10/27 23:38:47 Import directory: /home/miki/teaching/practical-go-services/unter/_class
+[gosec] 2022/10/27 23:38:47 Import directory: /home/miki/teaching/practical-go-services/unter/client
+[gosec] 2022/10/27 23:38:47 Import directory: /home/miki/teaching/practical-go-services/unter/logger
+[gosec] 2022/10/27 23:38:47 Import directory: /home/miki/teaching/practical-go-services/unter/cache
+[gosec] 2022/10/27 23:38:47 Import directory: /home/miki/teaching/practical-go-services/unter
+[gosec] 2022/10/27 23:38:47 Import directory: /home/miki/teaching/practical-go-services/unter/db
+[gosec] 2022/10/27 23:38:47 Checking package: unter
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/report.go
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/unter.go
+[gosec] 2022/10/27 23:38:47 Checking package: main
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/_class/template_example.go
+[gosec] 2022/10/27 23:38:47 Checking package: cache
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/cache/cache.go
+[gosec] 2022/10/27 23:38:47 Checking package: logger
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/logger/logger.go
+[gosec] 2022/10/27 23:38:47 Checking package: client
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/client/client.go
+[gosec] 2022/10/27 23:38:47 Checking package: db
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/db/db.go[gosec] 2022/10/27 23:38:47 Checking package: main
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/config.go
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go
+[gosec] 2022/10/27 23:38:47 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/middleware.go
+Results:
+
+
+[/home/miki/teaching/practical-go-services/unter/logger/logger.go:13] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    12: 		flags := os.O_APPEND | os.O_CREATE | os.O_WRONLY
+  > 13: 		file, err := os.OpenFile(outFile, flags, 0600)
+    14: 		if err != nil {
+
+
+
+[/home/miki/teaching/practical-go-services/unter/db/db.go:56] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    55: 	if err := db.Health(ctx); err != nil {
+  > 56: 		conn.Close()
+    57: 		return nil, err
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:428] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    427: 		defer cancel()
+  > 428: 		srv.Shutdown(ctx)
+    429: 	case err := <-errCh:
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:327] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    326: 	// fmt.Fprintf(w, infoHTML, rd.ID, rd.Driver, rd.Start, rd.End, rd.Kind, rd.Distance, fee)
+  > 327: 	infoTemplate.Execute(w, rd)
+    328: }
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:298] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    297: 	if err == nil {
+  > 298: 		s.cache.Set(r.Context(), id, data)
+    299: 	}
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:271] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    270: 		w.Header().Set("Content-Type", "application/json")
+  > 271: 		w.Write(data)
+    272: 		return
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:235] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    234: 	w.Header().Set("Content-Type", "application/json")
+  > 235: 	w.Write(data)
+    236: 	return nil
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:213] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    212: 	rd.End = time.Now().UTC()
+  > 213: 	s.db.Update(r.Context(), rd)
+    214: 	// TODO: invalidate cache
+
+
+
+[/home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go:85] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    84: 	}
+  > 85: 	sendJSON(w, resp)
+    86: }
+
+
+
+Summary:
+  Gosec  : 2.14.0
+  Files  : 10
+  Lines  : 1005
+  Nosec  : 1
+  Issues : 9
+
+make: *** [Makefile:7: test] Error 1
+unter on  main [!] via go v1.19.2 
+❮ make test
+staticcheck ./...
+govulncheck .
+govulncheck is an experimental tool. Share feedback at https://go.dev/s/govulncheck-feedback.
+
+Scanning for dependencies with known vulnerabilities...
+No vulnerabilities found.
+gosec ./...
+[gosec] 2022/10/27 23:39:10 Including rules: default
+[gosec] 2022/10/27 23:39:10 Excluding rules: default
+[gosec] 2022/10/27 23:39:10 Import directory: /home/miki/teaching/practical-go-services/unter/cache
+[gosec] 2022/10/27 23:39:10 Import directory: /home/miki/teaching/practical-go-services/unter/client
+[gosec] 2022/10/27 23:39:10 Import directory: /home/miki/teaching/practical-go-services/unter/cmd/httpd
+[gosec] 2022/10/27 23:39:10 Import directory: /home/miki/teaching/practical-go-services/unter/db
+[gosec] 2022/10/27 23:39:10 Import directory: /home/miki/teaching/practical-go-services/unter/logger
+[gosec] 2022/10/27 23:39:10 Import directory: /home/miki/teaching/practical-go-services/unter
+[gosec] 2022/10/27 23:39:10 Import directory: /home/miki/teaching/practical-go-services/unter/_class
+[gosec] 2022/10/27 23:39:10 Checking package: logger
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/logger/logger.go
+[gosec] 2022/10/27 23:39:10 Checking package: unter
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/report.go
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/unter.go
+[gosec] 2022/10/27 23:39:10 Checking package: client
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/client/client.go
+[gosec] 2022/10/27 23:39:10 Checking package: main
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/_class/template_example.go
+[gosec] 2022/10/27 23:39:10 Checking package: cache
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/cache/cache.go
+[gosec] 2022/10/27 23:39:10 Checking package: db
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/db/db.go[gosec] 2022/10/27 23:39:10 Checking package: main
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/config.go
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/main.go
+[gosec] 2022/10/27 23:39:10 Checking file: /home/miki/teaching/practical-go-services/unter/cmd/httpd/middleware.go
+Results:
+
+
+[/home/miki/teaching/practical-go-services/unter/logger/logger.go:13] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    12: 		flags := os.O_APPEND | os.O_CREATE | os.O_WRONLY
+  > 13: 		file, err := os.OpenFile(outFile, flags, 0600)
+    14: 		if err != nil {
+
+
+
+[/home/miki/teaching/practical-go-services/unter/db/db.go:56] - G104 (CWE-703): Errors unhandled. (Confidence: HIGH, Severity: LOW)
+    55: 	if err := db.Health(ctx); err != nil {
+  > 56: 		conn.Close()
+    57: 		return nil, err
+
+
+
+Summary:
+  Gosec  : 2.14.0
+  Files  : 10
+  Lines  : 1006
+  Nosec  : 2
+  Issues : 2
+
+make: *** [Makefile:7: test] Error 1
+
+unter on  main [!] via go v1.19.2 
+$

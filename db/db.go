@@ -53,7 +53,7 @@ func Connect(ctx context.Context, dsn string) (*DB, error) {
 
 	db := DB{conn}
 	if err := db.Health(ctx); err != nil {
-		conn.Close()
+		conn.Close() //#nosec 104
 		return nil, err
 	}
 

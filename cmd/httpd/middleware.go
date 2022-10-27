@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -89,16 +90,22 @@ func topMiddleware(log *log.Logger, h http.Handler) http.Handler {
 		if ok {
 			user, err := LoginUser(login, passwd)
 			if err != nil {
-				http.Error(w, "bad login", http.StatusForbidden)
+				badLogins.Add(1)
+				log.Printf("ERROR: <%s> [SEC] %q bad auth from %s", rid, login, r.RemoteAddr)
+				http.Error(w, fmt.Sprintf("bad login (%s)", rid), http.StatusForbidden)
 				return
 			}
+			log.Printf("INFO: <%s> [SEC] %q logged in from %s", rid, login, r.RemoteAddr)
 			v.User = user
+		} else {
+			okLogins.Add(1)
+			log.Printf("INFO: <%s> [SEC] no auth from %s", rid, r.RemoteAddr)
 		}
 
 		ctx := context.WithValue(r.Context(), ctxKey, &v)
 		r = r.Clone(ctx)
 
-		log.Printf("%s called (rid = %s)", r.URL.Path, rid)
+		log.Printf("INFO: <%s> %s called", rid, r.URL.Path)
 		start := time.Now()
 
 		h.ServeHTTP(w, r)
@@ -106,7 +113,7 @@ func topMiddleware(log *log.Logger, h http.Handler) http.Handler {
 		// after
 		duration := time.Since(start)
 		// exercise: Log the return HTTP status
-		log.Printf("%s ended in %v (rid = %s)", r.URL.Path, duration, rid)
+		log.Printf("INFO: <%s> %s ended in %v", rid, r.URL.Path, duration)
 	}
 
 	return http.HandlerFunc(fn)
